@@ -28,8 +28,8 @@ select,input[type=search]{flex:1;min-width:0}button.p{background:var(--ac);color
 <script src="https://cdn.jsdelivr.net/npm/@azure/msal-browser@2.38.3/lib/msal-browser.min.js"></script>
 <script>
 /* ====== CONFIGURATION (voir GUIDE.md) ====== */
-const CLIENT_ID = "2fd34dea-3839-4d3c-ad3b-6e08817b507a";
-const FILE_PATH = "https://onedrive.live.com/personal/88c5b6775f86bfcd/Documents/Gestion%20Pharma%20FP/O_PHARMA_2027.xlsm";   // chemin dans votre OneDrive
+const CLIENT_ID = 2fd34dea-3839-4d3c-ad3b-6e08817b507a;
+const FILE_PATH = https://onedrive.live.com/personal/88c5b6775f86bfcd/Documents/Gestion%20Pharma%20FP/O_PHARMA_2027.xlsm;   // chemin dans votre OneDrive
 const REFRESH_MS = 15000;                   // synchro temps réel (sondage)
 /* =========================================== */
 const MOIS=["JANVIER","FÉVRIER","MARS","AVRIL","MAI","JUIN","JUILLET","AOÛT","SEPTEMBRE","OCTOBRE","NOVEMBRE","DÉCEMBRE"];
