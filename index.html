@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1f24"><title>O_PHARMA 2027</title>
+<link rel="manifest" href="manifest.json">
+<style>
+:root{--bg:#0b1f24;--card:#12323a;--tx:#e8fbff;--mut:#8fb5bd;--ac:#3AFEEB;--ko:#ff6b6b;--ok:#4be38a}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px system-ui,sans-serif;padding-bottom:env(safe-area-inset-bottom)}
+header{position:sticky;top:0;background:var(--bg);padding:calc(env(safe-area-inset-top) + 10px) 12px 10px;z-index:5;border-bottom:1px solid #1e4650}
+h1{font-size:17px;margin:0 0 8px;display:flex;justify-content:space-between;align-items:center}
+.row{display:flex;gap:8px}select,input,button{font:inherit;border-radius:10px;border:1px solid #1e4650;background:var(--card);color:var(--tx);padding:10px}
+select,input[type=search]{flex:1;min-width:0}button.p{background:var(--ac);color:#04282b;font-weight:700;border:0}
+#st{font-size:12px;color:var(--mut);margin-top:6px}#bar{height:6px;background:#1e4650;border-radius:4px;margin-top:6px;overflow:hidden}#bar i{display:block;height:100%;background:var(--ac);width:0}
+#list{padding:10px 12px}.c{background:var(--card);border-radius:14px;padding:12px;margin-bottom:10px;border-left:4px solid #1e4650}
+.c.done{border-left-color:var(--ok)}.c.todo{border-left-color:var(--ko)}
+.t{display:flex;justify-content:space-between;gap:8px;font-weight:600}.n{color:#3AFEEB;font-weight:700}.m{color:var(--mut);font-size:13px;margin:4px 0 8px}
+.f{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.f label{font-size:11px;color:var(--mut)}.f input{width:100%;padding:8px}
+.f input.sv{outline:2px solid var(--ok)}.f input.er{outline:2px solid var(--ko)}
+#login{text-align:center;padding:60px 20px}.hide{display:none!important}
+</style></head><body>
+<div id="login"><h1 style="justify-content:center">💊 O_PHARMA 2027</h1><p>Connectez-vous avec votre compte Microsoft pour accéder au classeur.</p><button class="p" onclick="signIn()">Se connecter</button><p id="err" style="color:var(--ko)"></p></div>
+<div id="app" class="hide">
+<header><h1><span>💊 O_PHARMA 2027</span><button onclick="load()">⟳</button></h1>
+<div class="row"><select id="mois" onchange="load()"></select><select id="mode" onchange="render()"><option value="pos">Ordre magasin</option><option value="todo">À inventorier</option><option value="vente">Plus vendus</option></select></div>
+<div class="row" style="margin-top:8px"><input id="q" type="search" placeholder="Rechercher un produit…" oninput="render()"></div>
+<div id="st"></div><div id="bar"><i></i></div></header>
+<div id="list"></div></div>
+<script src="https://cdn.jsdelivr.net/npm/@azure/msal-browser@2.38.3/lib/msal-browser.min.js"></script>
+<script>
+/* ====== CONFIGURATION (voir GUIDE.md) ====== */
+const CLIENT_ID = "2fd34dea-3839-4d3c-ad3b-6e08817b507a";
+const FILE_PATH = "/Gestion Pharma FP/O_PHARMA_2027.xlsm";   // chemin dans votre OneDrive
+const REFRESH_MS = 15000;                   // synchro temps réel (sondage)
+/* =========================================== */
+const MOIS=["JANVIER","FÉVRIER","MARS","AVRIL","MAI","JUIN","JUILLET","AOÛT","SEPTEMBRE","OCTOBRE","NOVEMBRE","DÉCEMBRE"];
+const EDIT=["STOCK ENTRÉ","STOCK INVENTORIÉ","PERTES"];
+const pca=new msal.PublicClientApplication({auth:{clientId:CLIENT_ID,redirectUri:location.origin+location.pathname},cache:{cacheLocation:"localStorage"}});
+const SCOPES=["Files.ReadWrite","User.Read"];
+let token,H=[],R=[],origin={row:0,col:0},editing=false;
+const $=id=>document.getElementById(id);
+MOIS.forEach((m,i)=>$("mois").add(new Option(m,m)));$("mois").value=MOIS[new Date().getMonth()];
+async function signIn(){try{await pca.loginRedirect({scopes:SCOPES})}catch(e){$("err").textContent=e.message}}
+async function tok(){const a=pca.getAllAccounts()[0];if(!a)throw 0;
+ try{return (await pca.acquireTokenSilent({scopes:SCOPES,account:a})).accessToken}
+ catch(e){await pca.acquireTokenRedirect({scopes:SCOPES})}}
+async function g(path,opt={}){const r=await fetch("https://graph.microsoft.com/v1.0/me/drive/root:"+encodeURI(FILE_PATH)+":/workbook"+path,{...opt,headers:{Authorization:"Bearer "+token,"Content-Type":"application/json"}});
+ if(!r.ok)throw new Error((await r.json().catch(()=>({}))).error?.message||r.status);return r.json()}
+const col=n=>{let s="";n++;while(n){s=String.fromCharCode(65+(n-1)%26)+s;n=Math.floor((n-1)/26)}return s};
+function parse(addr){const m=addr.split("!")[1].replace(/\$/g,"").match(/([A-Z]+)(\d+):/);
+ const c=[...m[1]].reduce((a,x)=>a*26+x.charCodeAt(0)-64,0)-1;return{row:+m[2],col:c}}
+async function load(){if(editing)return;try{token=await tok();const m=$("mois").value;
+ const d=await g(`/tables('STOCK_${encodeURIComponent(m)}')/range`);
+ H=d.values[0];R=d.values.slice(1);origin=parse(d.address);origin.sheet=m;render();
+ $("st").textContent="Synchronisé à "+new Date().toLocaleTimeString("fr-FR")}
+ catch(e){$("st").textContent="⚠ "+e.message}}
+const ix=n=>H.indexOf(n);
+function render(){const iP=ix("PRODUITS (DCI)"),iN=ix("N° Pos."),iI=ix("STOCK INVENTORIÉ"),iV=ix("VALEUR VENTE S. SORTI"),iU=ix("UNITE DE COMPTAGE"),iS=ix("STOCK INITIAL");
+ let rows=R.map((r,i)=>({r,i})).filter(x=>x.r[iP]);
+ const filled=rows.filter(x=>x.r[iI]!=="").length;$("bar").firstChild.style.width=(rows.length?100*filled/rows.length:0)+"%";
+ $("st").textContent=`${filled}/${rows.length} inventoriés`+(filled==rows.length&&rows.length?" — ✔ INVENTAIRE TERMINÉ":` — reste ${rows.length-filled}`);
+ const q=$("q").value.toLowerCase(),mode=$("mode").value;
+ rows=rows.filter(x=>String(x.r[iP]).toLowerCase().includes(q));
+ if(mode=="todo")rows=rows.filter(x=>x.r[iI]==="");
+ rows.sort((a,b)=>mode=="vente"?(+b.r[iV]||0)-(+a.r[iV]||0):(+a.r[iN]||999)-(+b.r[iN]||999));
+ $("list").innerHTML=rows.map(({r,i})=>`<div class="c ${r[iI]===""?"todo":"done"}"><div class="t"><span>${r[iP]}</span><span class="n">#${r[iN]}</span></div>
+ <div class="m">${r[iU]} · Stock initial : ${r[iS]}</div><div class="f">${EDIT.map(n=>`<div><label>${n.replace("STOCK ","")}</label>
+ <input type="number" inputmode="decimal" value="${r[ix(n)]}" onfocus="editing=true" onblur="editing=false" onchange="save(${i},'${n}',this)"></div>`).join("")}</div></div>`).join("")}
+async function save(i,n,el){try{token=await tok();const a=col(origin.col+ix(n))+(origin.row+1+i);
+ const v=el.value===""?"":Number(el.value);
+ await g(`/worksheets('${encodeURIComponent(origin.sheet)}')/range(address='${a}')`,{method:"PATCH",body:JSON.stringify({values:[[v]]})});
+ R[i][ix(n)]=v;el.classList.add("sv");editing=false;setTimeout(load,300)}catch(e){el.classList.add("er");$("st").textContent="⚠ "+e.message}}
+(async()=>{await pca.handleRedirectPromise();if(pca.getAllAccounts().length){$("login").classList.add("hide");$("app").classList.remove("hide");load();setInterval(load,REFRESH_MS);
+ document.addEventListener("visibilitychange",()=>!document.hidden&&load())}})();
+</script></body></html>
