@@ -59,6 +59,41 @@ td input{width:92px;padding:6px;text-align:right}td input.pd{outline:2px solid v
 #fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50;display:none;background:rgba(3,18,22,0);transition:background .45s}#fx.on{background:rgba(3,18,22,.4)}
 #toast{position:fixed;left:50%;top:42%;transform:translate(-50%,-50%) scale(.6);z-index:51;padding:14px 22px;border-radius:18px;background:rgba(10,40,46,.92);border:1px solid var(--ac);color:#fff;font-weight:800;font-size:17px;text-align:center;box-shadow:0 0 30px rgba(58,254,235,.45);opacity:0;pointer-events:none;max-width:84vw}
 #toast.go{animation:pop 2.2s ease forwards}@keyframes pop{12%{opacity:1;transform:translate(-50%,-50%) scale(1.06)}20%{transform:translate(-50%,-50%) scale(1)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-60%) scale(1)}}
+
+/* ---- v3 : boutons (sombre sans modification, actif avec modification) ---- */
+#act button.p{transition:background .3s,color .3s,box-shadow .3s,border-color .3s;border:1px solid transparent}
+#act button.p:not(:disabled){box-shadow:0 0 18px rgba(58,254,235,.35)}
+#act button.p:disabled{background:linear-gradient(135deg,#08242a,#0d343b);color:#5e8b93;border:1px solid #1b4750;box-shadow:none;cursor:default}
+/* ---- v3 : Bilan ---- */
+.k{margin-bottom:34px}
+.bt td input{text-align:center}
+.bt td.lb{box-shadow:inset 5px 0 0 var(--lc,#3AFEEB)}
+.bt td.tt{border-left:2px solid var(--lc,#f2c14e)}
+.bt tr.r1 td.tt{background:linear-gradient(135deg,#0a2a47,#145286);color:#a9d4ff}
+.bt tr.r2 td.tt{background:linear-gradient(135deg,#43260a,#7c4a12);color:#ffd0a0}
+.bt tr.r3 td.tt{background:linear-gradient(135deg,#093b29,#12694a);color:#9bffc8}
+/* ---- v3 : Recouvrement ---- */
+.sv tr.e{--lc:#ff7a9c}
+.sv tr:not(.h)>:last-child{border-left:2px solid var(--lc,#f2c14e)}
+.sv tr.a>:last-child{background:linear-gradient(135deg,#43260a,#7c4a12);color:#ffd0a0}
+.sv tr.v>:last-child{background:linear-gradient(135deg,#0a2a47,#145286);color:#a9d4ff}
+.sv tr.s>:last-child{background:linear-gradient(135deg,#093b29,#12694a);color:#9bffc8}
+.sv tr.e>:last-child{background:linear-gradient(135deg,#4a1226,#80233f);color:#ffb8cb}
+.ring{overflow:visible;filter:drop-shadow(0 0 7px rgba(58,254,235,.55));animation:ringhalo 2.8s ease-in-out infinite}
+@keyframes ringhalo{0%,100%{filter:drop-shadow(0 0 5px rgba(58,254,235,.45)) drop-shadow(0 0 12px rgba(58,254,235,.18))}50%{filter:drop-shadow(0 0 11px rgba(58,254,235,.95)) drop-shadow(0 0 26px rgba(255,215,122,.38))}}
+.ring .pg{animation:ringin 1.7s cubic-bezier(.22,.8,.2,1) both}
+@keyframes ringin{from{stroke-dasharray:0 440}}
+.ring .dg{transform-box:view-box;transform-origin:90px 90px;animation:dotin 1.7s cubic-bezier(.22,.8,.2,1) both}
+@keyframes dotin{from{transform:rotate(0deg)}to{transform:rotate(var(--ang))}}
+.ring .hl{transform-box:fill-box;transform-origin:center;animation:dotpulse 1.9s ease-out infinite}
+@keyframes dotpulse{0%{transform:scale(.7);opacity:.85}100%{transform:scale(2.5);opacity:0}}
+.ring .tk{animation:tkspin 9s linear infinite;transform-box:view-box;transform-origin:90px 90px}
+@keyframes tkspin{to{transform:rotate(360deg)}}
+/* ---- v3 : noms de molécules pendant l'envoi ---- */
+#mols{position:fixed;inset:0;pointer-events:none;z-index:52;overflow:hidden}
+.mol{position:absolute;white-space:nowrap;font:600 11px/1 system-ui,sans-serif;letter-spacing:.4px;color:#c4fff7;text-shadow:0 0 6px rgba(58,254,235,.8);opacity:0;animation:molf 2.8s ease-in-out forwards}
+@keyframes molf{0%{opacity:0;transform:translateY(8px) scale(.92)}25%{opacity:.95}70%{opacity:.85}100%{opacity:0;transform:translateY(-12px) scale(1.04)}}
+@media (prefers-reduced-motion:reduce){.ring,.ring .pg,.ring .dg,.ring .hl,.ring .tk{animation:none}}
 </style></head><body>
 <div id="login"><img src="icon-512.png" alt=""><h1>Gestion Pharmacie - EPHD Sandégué 2027</h1><p>Connectez-vous avec votre compte Microsoft pour accéder au classeur.</p><button class="p" onclick="signIn()">Se connecter</button><p id="err" style="color:var(--ko)"></p></div>
 <div id="app" class="hide">
@@ -67,7 +102,7 @@ td input{width:92px;padding:6px;text-align:right}td input.pd{outline:2px solid v
 <div id="sf"><div class="row" style="margin-top:8px"><input id="q" type="search" placeholder="Rechercher un produit…" oninput="render()"></div></div>
 <div class="srow"><div id="st"></div><button class="out" onclick="signOut()">Se déconnecter</button></div><div id="bar"><i></i></div><div id="fin" class="hide">✔ INVENTAIRE TERMINÉ</div></header>
 <main id="main"></main>
-<div id="act"><button id="b-stock" class="p" onclick="valider()">Je valide l'inventaire.</button><button id="b-bilan" class="p hide" onclick="validerB()">Je valide les recettes</button></div>
+<div id="act"><button id="b-stock" class="p" onclick="valider()">Je valide l'inventaire.</button><button id="b-bilan" class="p hide" onclick="validerB()">Je valide les recettes.</button></div>
 <nav><button id="t-stock" class="on" onclick="tab('stock')">📦 Stock</button><button id="t-bilan" onclick="tab('bilan')">💰 Bilan</button><button id="t-rec" onclick="tab('rec')">📈 Recouvrement</button></nav>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@azure/msal-browser@2.38.3/lib/msal-browser.min.js"></script>
@@ -81,10 +116,12 @@ const EDIT=["STOCK ENTRÉ","STOCK INVENTORIÉ","PERTES"],ELAB=["Entré","Invento
 const pca=new msal.PublicClientApplication({auth:{clientId:CLIENT_ID,redirectUri:location.origin+location.pathname},cache:{cacheLocation:"localStorage"}});
 const SCOPES=["Files.ReadWrite","User.Read"];
 const $=id=>document.getElementById(id),enc=encodeURIComponent,S="§",J=JSON.stringify;
-const num=v=>typeof v==="number"?Math.round(v).toLocaleString("fr-FR"):(v||"0");const fcfa=v=>num(v)+" FCFA";
+const num=v=>typeof v==="number"?Math.round(v).toLocaleString("fr-FR"):(v||"0");const fcfa=v=>num(v)+"\u00a0F\u00a0CFA";
 let CACHE=(()=>{try{return JSON.parse(localStorage.getItem("op_notes")||"{}")}catch(e){return{}}})(),NX={},NXT=false,token,H=[],R=[],origin={row:5,col:0},editing=false,cur="stock",NOTES={},NROWS=[],NT=false,BIL=null;
 let P=Object.assign({v:{},c:{},b:{}},JSON.parse(localStorage.getItem("op_pend")||"{}"));
 const keep=()=>localStorage.setItem("op_pend",J(P));
+let SENDING=false;
+function btns(){const m=$("mois").value,has=o=>Object.keys(o).some(k=>k.startsWith(m+S));$("b-stock").disabled=SENDING||!(has(P.v)||has(P.c));$("b-bilan").disabled=SENDING||!has(P.b)}
 MOIS.forEach(m=>$("mois").add(new Option(m,m)));$("mois").value=MOIS[new Date().getMonth()];
 async function signIn(){try{await pca.loginRedirect({scopes:SCOPES})}catch(e){$("err").textContent=e.message}}
 async function tok(){const a=pca.getAllAccounts()[0];if(!a)throw 0;try{return (await pca.acquireTokenSilent({scopes:SCOPES,account:a})).accessToken}catch(e){await pca.acquireTokenRedirect({scopes:SCOPES})}}
@@ -113,7 +150,7 @@ async function load(){if(editing)return;$("rf").classList.add("spin");try{token=
 const ix=n=>H.indexOf(n),NK=(p,n)=>$("mois").value+S+p+S+n,pr=r=>r[ix("PRODUITS (DCI)")];
 const val=(r,n)=>{const k=NK(pr(r),n);return k in P.v?P.v[k]:r[ix(n)]};
 const rows=()=>R.map((r,i)=>({r,i})).filter(x=>pr(x.r)&&String(pr(x.r)).trim().toUpperCase()!=="TOTAL");
-function stat(){const np=Object.keys(P.v).length+Object.keys(P.c).length+Object.keys(P.b).length,tail=np?` · ${np} modif. à envoyer`:"";
+function stat(){btns();const np=Object.keys(P.v).length+Object.keys(P.c).length+Object.keys(P.b).length,tail=np?` · ${np} modif. à envoyer`:"";
  if(cur!="stock"){$("st").textContent=(np?`${np} modif. à envoyer`:"")+($("st").dataset.s||"");return}
  const all=rows(),f=all.filter(x=>val(x.r,"STOCK INVENTORIÉ")!=="").length;$("bar").firstChild.style.width=(all.length?100*f/all.length:0)+"%";
  $("st").textContent=`${f}/${all.length} inventoriés`+(all.length&&f==all.length?"":` — reste ${all.length-f}`)+tail+" · "+($("st").dataset.t||"");$("fin").classList.toggle("hide",!(all.length&&f==all.length))}
@@ -138,13 +175,13 @@ async function putNote(m,p,c,txt){await ensureNotes();const i=NROWS.findIndex(r=
  if(i>=0){await g(`/tables('NOTES_APP')/rows/itemAt(index=${i})`,{method:"PATCH",body:J({values:[row]})});NROWS[i]=row}
  else{await g("/tables('NOTES_APP')/rows/add",{method:"POST",body:J({values:[row]})});NROWS.push(row)}const kc=m+S+p+S+c;CACHE[kc]={t:txt,b:NX[kc]||""};saveCache()}
 async function valider(){const m=$("mois").value,b=$("b-stock"),ks=Object.keys(P.v).filter(k=>k.startsWith(m+S)),cs=Object.keys(P.c).filter(k=>k.startsWith(m+S)),tot=ks.length+cs.length;let n=0;
- editing=false;if(!tot)return load();b.disabled=true;const fx=FX.start("pills");
+ editing=false;if(!tot)return load();SENDING=true;btns();const fx=FX.start("pills");
  try{token=await tok();
  for(const k of ks){const[,p,c]=k.split(S),i=R.findIndex(r=>pr(r)===p);if(i<0)continue;await put(col(origin.col+ix(c))+(origin.row+1+i),m,P.v[k]);delete P.v[k];keep();$("st").textContent=`Envoi ${++n}/${tot}…`}
  if(cs.length){await loadNotes();for(const k of cs){const[,p,c]=k.split(S);await putNote(m,p,c,P.c[k]);delete P.c[k];keep();$("st").textContent=`Envoi ${++n}/${tot}…`}}
  fx.finish("Inventaire envoyé vers Excel");await load();$("st").dataset.t="✔ Envoyé à "+new Date().toLocaleTimeString("fr-FR");stat()}
- catch(e){fx.cancel();$("st").textContent="⚠ Envoi interrompu : "+e.message+" (le reste est conservé)"}b.disabled=false}
-async function bilan(m){const d=await g(`/worksheets('${enc(m)}')/range(address='A74:R115')`),V=d.values,r=V.findIndex(x=>x[1]==="DATE DE VERSEMENTS");
+ catch(e){fx.cancel();$("st").textContent="⚠ Envoi interrompu : "+e.message+" (le reste est conservé)"}SENDING=false;stat()}
+async function bilan(m){const d=await g(`/worksheets('${enc(m)}')/range(address='A74:R160')`),V=d.values,r=V.findIndex(x=>x[1]==="DATE DE VERSEMENTS");
  if(r<0){$("main").innerHTML="<p>Bilan financier introuvable.</p>";return}
  BIL={V,r,m};const f=l=>V.find(x=>x[1]===l)?.[2],R0=74+r,ec=String(f("ECART")??"–");
  const inp=row=>V[row-74].slice(2,13).map((x,j)=>`<td><input type="number" inputmode="decimal" value="${bv(row,j+2)}" class="${m+S+row+S+col(j+2) in P.b?"pd":""}" onfocus="editing=true" onblur="editing=false;stat()" oninput="setB(${row},${j+2},this.value)"></td>`).join("");
@@ -153,14 +190,14 @@ async function bilan(m){const d=await g(`/worksheets('${enc(m)}')/range(address=
  <div class="sc"><table class="bt"><tr><th>${V[r][1]}</th>${V[r].slice(2,13).map(x=>`<th>${x}</th>`).join("")}<th>Total</th></tr>
  <tr class="r1"><td class="lb">${V[r+1][1]}</td>${inp(R0+1)}<td class="tt" id="tt1">${num(V[r+1][13])}</td></tr><tr class="r2"><td class="lb">${V[r+2][1]}</td>${inp(R0+2)}<td class="tt" id="tt2">${num(V[r+2][13])}</td></tr>
  <tr class="r3"><td class="lb">${V[r+3][1]}</td>${V[r+3].slice(2,13).map((x,j)=>`<td id="rc${j+2}">${num(x)}</td>`).join("")}<td class="tt" id="tt3">${num(V[r+3][13])}</td></tr></table></div>
- <p style="color:var(--mut);font-size:12px">Saisissez les montants versés et les dépenses, puis appuyez sur « Je valide les recettes ».</p>`}
+ <p style="color:var(--mut);font-size:12px">Saisissez les montants versés et les dépenses, puis appuyez sur « Je valide les recettes. ».</p>`}
 const bv=(row,j)=>{const k=BIL.m+S+row+S+col(j);return k in P.b?P.b[k]:BIL.V[row-74][j]};
 function recalc(){if(!BIL)return;const R0=74+BIL.r,t=[0,0];for(let j=2;j<13;j++){const a=+bv(R0+1,j)||0,b=+bv(R0+2,j)||0;t[0]+=a;t[1]+=b;const e=$("rc"+j);if(e)e.textContent=num(a+b)}
  [t[0],t[1],t[0]+t[1]].forEach((v,i)=>{const e=$("tt"+(i+1));if(e)e.textContent=num(v)})}
 function setB(row,j,v){P.b[$("mois").value+S+row+S+col(j)]=v===""?"":Number(v);keep();recalc();stat()}
-async function validerB(){const m=$("mois").value,b=$("b-bilan"),ks=Object.keys(P.b).filter(k=>k.startsWith(m+S));let n=0;editing=false;if(!ks.length)return load();b.disabled=true;const fx=FX.start("money");
+async function validerB(){const m=$("mois").value,b=$("b-bilan"),ks=Object.keys(P.b).filter(k=>k.startsWith(m+S));let n=0;editing=false;if(!ks.length)return load();SENDING=true;btns();const fx=FX.start("money");
  try{token=await tok();for(const k of ks){const[,row,c]=k.split(S);await put(c+row,m,P.b[k]);delete P.b[k];keep();$("st").textContent=`Envoi ${++n}/${ks.length}…`}
- fx.finish("Recettes envoyées vers Excel");await load();$("st").dataset.s=" · ✔ Versements envoyés";stat()}catch(e){fx.cancel();$("st").textContent="⚠ Envoi interrompu : "+e.message}b.disabled=false}
+ fx.finish("Recettes envoyées vers Excel");await load();$("st").dataset.s=" · ✔ Versements envoyés";stat()}catch(e){fx.cancel();$("st").textContent="⚠ Envoi interrompu : "+e.message}SENDING=false;stat()}
 const pool=async(fns,n)=>{const out=[];let i=0;await Promise.all(Array.from({length:n},async()=>{while(i<fns.length){const k=i++;out[k]=await fns[k]().catch(()=>null)}}));return out};
 /* Les lignes ACHAT / SOLDE / Factures échues de SOLVABILITÉ utilisent INDIRECT(« LIVRAISONS_RECOU_… [[#Totaux];[DÉBIT]] ») : syntaxe dépendante de la langue d'Excel,
    qui renvoie #REF! quand le classeur est calculé via Microsoft Graph (anglais). On relit donc les totaux DÉBIT des 12 tableaux et on refait EXACTEMENT les mêmes calculs que le classeur. */
@@ -174,37 +211,104 @@ async function recou(){const sh=enc("SOLVABILITÉ"),d=await g(`/worksheets('${sh
   T[4][14]=fm(s);T[2][15]=fm(R4);T[3][15]=fm(R5);T[4][15]=fm(R4-R5);T[5][15]=fm(fac);pc=R4?R5/R4:0}
  pc=Math.max(0,Math.min(pc,1));const C=2*Math.PI*70,mm=MOIS[new Date().getMonth()],cl=["h","a","v","s","e"],an=-Math.PI/2+pc*2*Math.PI,dx=90+70*Math.cos(an),dy=90+70*Math.sin(an);
  $("main").innerHTML=`<h2>SUIVI DU RECOUVREMENT – NPSP</h2><svg class="ring" width="250" height="250" viewBox="0 0 180 180"><circle cx="90" cy="90" r="70" fill="none" stroke="#1d4a52" stroke-width="16"/>
- <circle cx="90" cy="90" r="70" fill="none" stroke="#3AFEEB" stroke-width="16" stroke-linecap="round" stroke-dasharray="${C*pc} ${C}" transform="rotate(-90 90 90)"/><circle cx="${dx.toFixed(2)}" cy="${dy.toFixed(2)}" r="10" fill="#3AFEEB"/>
- <text x="90" y="96" text-anchor="middle" fill="#fff" font-size="40" font-weight="800">${Math.round(pc*100)}%</text><text x="90" y="113" text-anchor="middle" fill="#4be38a" font-size="8.5">TAUX DE RECOUVREMENT NPSP</text><text x="90" y="124" text-anchor="middle" fill="#4be38a" font-size="8.5">EN ${mm}</text></svg>
- <h2 style="font-size:15px">${T[0][0]}</h2><div class="sc"><table class="sv">${T.slice(1,6).map((r,i)=>`<tr class="${cl[i]}">${r.map((c,j)=>i==0?`<th>${c}</th>`:`<td>${c}</td>`).join("")}</tr>`).join("")}</table></div><p class="fn">${T[6][0]||""}</p>`}
-/* ====== ANIMATION D'ENVOI VERS EXCEL : pluie de gélules (inventaire) / de billets et de pièces (recettes) ====== */
-const FX=(()=>{let cv,cx,P=[],W=0,H=0,raf=0,em=false,kind="",last=0,T=0,acc=0,minEnd=0,id=0;
- const red=matchMedia("(prefers-reduced-motion: reduce)").matches,MAX=red?50:170,RATE=red?35:115,rnd=(a,b)=>a+Math.random()*(b-a),pick=a=>a[Math.random()*a.length|0];
+ <circle class="tk" cx="90" cy="90" r="80" fill="none" stroke="rgba(58,254,235,.35)" stroke-width="1" stroke-dasharray="1.5 7"/>
+ <circle class="pg" cx="90" cy="90" r="70" fill="none" stroke="#3AFEEB" stroke-width="16" stroke-linecap="round" stroke-dasharray="${C*pc} ${C}" transform="rotate(-90 90 90)"/>
+ <g class="dg" style="--ang:${(pc*360).toFixed(2)}deg"><circle class="hl" cx="90" cy="20" r="10" fill="#3AFEEB"/><circle cx="90" cy="20" r="10" fill="#3AFEEB"/><circle cx="90" cy="20" r="4" fill="#eafffd"/></g>
+ <text id="pcv" x="90" y="89" text-anchor="middle" fill="#fff" font-size="38" font-weight="800">${Math.round(pc*100)}%</text>
+ <text x="90" y="106" text-anchor="middle" fill="#4be38a" font-size="6.6" font-weight="600" textLength="98" lengthAdjust="spacingAndGlyphs">TAUX DE RECOUVREMENT NPSP</text>
+ <text x="90" y="116" text-anchor="middle" fill="#4be38a" font-size="6.6" font-weight="600">EN ${mm}</text></svg>
+ <h2 style="font-size:15px">${T[0][0]}</h2><div class="sc"><table class="sv">${T.slice(1,6).map((r,i)=>`<tr class="${cl[i]}">${r.map((c,j)=>i==0?`<th>${c}</th>`:`<td>${c}</td>`).join("")}</tr>`).join("")}</table></div><p class="fn">${T[6][0]||""}</p>`;countUp($("pcv"),Math.round(pc*100))}
+function countUp(e,to){if(!e||matchMedia("(prefers-reduced-motion: reduce)").matches)return;const t0=performance.now(),D=1700;e.textContent="0%";(function f(t){const p=Math.min(1,(t-t0)/D),v=Math.round(to*(1-Math.pow(1-p,3)));e.textContent=v+"%";if(p<1&&e.isConnected)requestAnimationFrame(f)})(t0)}
+/* ====== ANIMATION D'ENVOI VERS EXCEL : pluie 3D de gélules, comprimés et capsules molles (inventaire) / de billets et pièces F CFA (recettes) ====== */
+const FX=(()=>{let cv,cx,P=[],W=0,H=0,raf=0,em=false,kind="",last=0,T=0,acc=0,minEnd=0,id=0,mt=0,box=null,art=null;
+ const red=matchMedia("(prefers-reduced-motion: reduce)").matches,MAX=red?28:96,RATE=red?6:14,rnd=(a,b)=>a+Math.random()*(b-a),pick=a=>a[Math.random()*a.length|0];
+ const MOL=["Amoxicilline","Métronidazole","Paracétamol","Ciprofloxacine","Ibuprofène","Albendazole","Artésunate","Diclofénac","Oméprazole","Ceftriaxone","Gentamicine","Fluconazole","Salbutamol","Metformine","Amlodipine","Ampicilline","Diazépam","Tramadol","Cotrimoxazole","Furosémide","Dexaméthasone","Doxycycline","Artéméther","Lumefantrine","Ranitidine","Prednisolone","Captopril","Phénobarbital","Ceftazidime","Vitamine C"];
  const CAPS=[["#ff4d6d","#ffe3e8"],["#13c8b5","#ffffff"],["#ffb703","#fff3cf"],["#3fd47f","#eafff2"],["#6f7dff","#ffffff"],["#ff8fab","#fff0f4"],["#ff7a2f","#fff1e6"]];
- const NOTE=[["1000","#2f6fd6","#a9c8ff"],["2000","#d2494a","#ffb9b6"],["5000","#2a9a58","#a6f0c3"],["10000","#d69424","#ffe3a6"]];
- function init(){if(cv)return;cv=document.createElement("canvas");cv.id="fx";document.body.appendChild(cv);cx=cv.getContext("2d");addEventListener("resize",size);size()}
+ const TAB=["#f7fcff","#ffeaf0","#fff6da","#e8f7ff","#f1eaff","#eafff3"];
+ const GEL=[["#fff1a8","#ffc42e","#d98200"],["#ffd6a0","#ff9a3c","#c25a00"],["#e8ffb8","#a6e04a","#5f9a14"]];
+ /* Billets BCEAO (teintes d'ambiance par coupure) et pièces en F CFA */
+ const NOTE={"1000":["#2a6fb5","#14467f","#d3e8fa"],"2000":["#8a4a9e","#5a2a70","#efd9f5"],"5000":["#3b8a52","#1f5a34","#d9f2df"],"10000":["#c0701f","#7d4310","#fbe3c0"]};
+ const SIL=["#f6f9fc","#c4ced7","#7b8895"],GLD=["#fff1ac","#e6b83a","#94690a"];
+ const COIN=[{v:"500",r:13,o:SIL,i:GLD},{v:"200",r:11.6,o:GLD,i:SIL},{v:"100",r:11,o:SIL},{v:"50",r:10,o:SIL},{v:"25",r:8.6,o:GLD},{v:"10",r:8,o:GLD}];
+ const rrc=(g,x,y,w,h,r)=>{g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath()};
+ const mk=(w,h)=>{const c=document.createElement("canvas");c.width=w;c.height=h;return c};
+ function mkNote(den,pal,back){const c=mk(240,116),g=c.getContext("2d");rrc(g,0,0,240,116,7);g.save();g.clip();
+  const bg=g.createLinearGradient(0,0,240,116);bg.addColorStop(0,pal[0]);bg.addColorStop(.5,back?pal[1]:pal[0]);bg.addColorStop(1,pal[1]);g.fillStyle=bg;g.fillRect(0,0,240,116);
+  g.lineWidth=.8;for(let i=0;i<20;i++){g.beginPath();for(let x=0;x<=240;x+=4){const y=58+Math.sin(x*.045+i*.5)*(16+i*1.5)+(i-10)*4;x?g.lineTo(x,y):g.moveTo(x,y)}g.strokeStyle="rgba(255,255,255,"+(back?.12:.15)+")";g.stroke()}
+  for(let i=1;i<9;i++){g.beginPath();g.arc(back?120:190,58,i*7,0,6.283);g.strokeStyle="rgba(255,255,255,.13)";g.stroke()}
+  g.strokeStyle="rgba(255,255,255,.55)";g.lineWidth=1.4;rrc(g,6,6,228,104,5);g.stroke();g.strokeStyle="rgba(0,0,0,.18)";g.lineWidth=.8;rrc(g,9,9,222,98,4);g.stroke();
+  g.textAlign="center";g.textBaseline="middle";g.font="600 6.5px system-ui,sans-serif";g.fillStyle="rgba(255,255,255,.9)";
+  if(!back){const md=g.createRadialGradient(46,52,4,52,58,32);md.addColorStop(0,pal[2]);md.addColorStop(1,pal[0]);g.beginPath();g.arc(52,58,30,0,6.283);g.fillStyle=md;g.fill();g.lineWidth=2;g.strokeStyle="rgba(255,255,255,.7)";g.stroke();
+   g.fillStyle="rgba(0,0,0,.34)";g.beginPath();g.ellipse(52,50,9,11,0,0,6.283);g.fill();g.beginPath();g.ellipse(52,78,17,13,0,Math.PI,0);g.fill();
+   g.fillStyle="rgba(255,255,255,.92)";g.fillText("BANQUE CENTRALE DES ÉTATS DE L'AFRIQUE DE L'OUEST",120,17,196);
+   g.font="800 46px system-ui,sans-serif";g.lineWidth=3;g.strokeStyle="rgba(0,0,0,.35)";g.strokeText(den,134,60);g.fillStyle="#fff";g.fillText(den,134,60);
+   g.font="700 11px system-ui,sans-serif";g.fillStyle="rgba(255,255,255,.95)";g.fillText("FRANCS CFA",134,88);
+   const hl=g.createLinearGradient(208,20,226,56);["#ff8ad8","#8ae9ff","#fff59a","#9dff9d"].forEach((x,i)=>hl.addColorStop(i/3,x));g.globalAlpha=.8;g.fillStyle=hl;rrc(g,206,22,20,36,3);g.fill();g.globalAlpha=1;
+   const th=g.createLinearGradient(0,0,6,0);th.addColorStop(0,"#eef3f7");th.addColorStop(1,"#8f9ba6");g.fillStyle=th;g.fillRect(172,6,5,104);
+   g.font="700 8px system-ui,sans-serif";g.textAlign="left";g.fillStyle="rgba(255,255,255,.9)";g.fillText(den,14,102);g.textAlign="right";g.fillText(den,226,102);g.font="500 5.5px monospace";g.fillText("A 0278 4416 "+den,166,102)}
+  else{g.font="900 38px system-ui,sans-serif";g.fillStyle="rgba(255,255,255,.2)";g.fillText("BCEAO",120,38);g.font="800 34px system-ui,sans-serif";g.lineWidth=3;g.strokeStyle="rgba(0,0,0,.3)";g.strokeText(den,120,76);g.fillStyle="#fff";g.fillText(den,120,76);
+   g.font="600 6.5px system-ui,sans-serif";g.fillStyle="rgba(255,255,255,.9)";g.fillText("UNION MONÉTAIRE OUEST AFRICAINE",120,103,190)}
+  g.restore();return c}
+ function mkCoin(o,back){const S=112,c=mk(S,S),g=c.getContext("2d"),R=S/2-1,m=S/2;
+  const disc=(rad,p)=>{const gr=g.createRadialGradient(m-rad*.35,m-rad*.4,rad*.1,m,m,rad);gr.addColorStop(0,p[0]);gr.addColorStop(.55,p[1]);gr.addColorStop(1,p[2]);g.beginPath();g.arc(m,m,rad,0,6.283);g.fillStyle=gr;g.fill()};
+  disc(R,o.o);g.lineWidth=1;g.strokeStyle="rgba(0,0,0,.28)";for(let i=0;i<72;i++){const a=i*6.283/72;g.beginPath();g.moveTo(m+Math.cos(a)*R*.93,m+Math.sin(a)*R*.93);g.lineTo(m+Math.cos(a)*R*.99,m+Math.sin(a)*R*.99);g.stroke()}
+  g.lineWidth=1.8;g.strokeStyle="rgba(255,255,255,.6)";g.beginPath();g.arc(m,m,R*.88,0,6.283);g.stroke();g.strokeStyle="rgba(0,0,0,.28)";g.beginPath();g.arc(m+.8,m+.8,R*.88,0,6.283);g.stroke();
+  let tp=o.o;if(o.i){disc(R*.6,o.i);g.lineWidth=1.6;g.strokeStyle="rgba(0,0,0,.4)";g.beginPath();g.arc(m,m,R*.6,0,6.283);g.stroke();g.strokeStyle="rgba(255,255,255,.55)";g.beginPath();g.arc(m,m,R*.6+1.6,0,6.283);g.stroke();tp=o.i}
+  g.textAlign="center";g.textBaseline="middle";const t=back?"BCEAO":o.v,fs=back?R*.3:(t.length>2?R*.52:R*.68);g.font="800 "+fs+"px system-ui,sans-serif";
+  g.fillStyle="rgba(0,0,0,.4)";g.fillText(t,m+1.3,m+(back?0:-R*.06)+1.3);g.fillStyle=tp[2];g.fillText(t,m,m+(back?0:-R*.06));g.fillStyle="rgba(255,255,255,.55)";g.fillText(t,m-.8,m+(back?0:-R*.06)-.8);g.fillStyle=tp[2];g.fillText(t,m,m+(back?0:-R*.06));
+  if(!back){g.font="700 "+R*.17+"px system-ui,sans-serif";g.fillStyle=tp[2];g.fillText("F CFA",m,m+R*.36)}return c}
+ function buildArt(){if(art)return;art={};for(const d in NOTE)art["n"+d]=[mkNote(d,NOTE[d],false),mkNote(d,NOTE[d],true)];COIN.forEach(o=>art["c"+o.v]=[mkCoin(o,false),mkCoin(o,true)])}
+ function init(){if(cv)return;cv=document.createElement("canvas");cv.id="fx";document.body.appendChild(cv);cx=cv.getContext("2d");box=document.createElement("div");box.id="mols";document.body.appendChild(box);addEventListener("resize",size);size()}
  function size(){const d=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*d;cv.height=H*d;cx.setTransform(d,0,0,d,0,0)}
- const rr=(x,y,w,h,r)=>{cx.beginPath();cx.moveTo(x+r,y);cx.arcTo(x+w,y,x+w,y+h,r);cx.arcTo(x+w,y+h,x,y+h,r);cx.arcTo(x,y+h,x,y,r);cx.arcTo(x,y,x+w,y,r);cx.closePath()};
- function make(burst){const s={x:rnd(-10,W+10),y:burst?rnd(-H*.6,-20):rnd(-70,-20),vx:rnd(-30,30),vy:rnd(130,330),a:rnd(0,6.28),va:rnd(-4,4),fl:rnd(0,6.28),vf:rnd(2,6),sw:rnd(0,6.28),sf:rnd(1.5,3.5),sa:rnd(12,45),k:rnd(.85,1.4)};
-  if(kind=="pills"){const r=Math.random();s.t=r<.5?"cap":r<.8?"tab":"gel";s.c=pick(CAPS)}
-  else{if(Math.random()<.5){s.t="note";s.c=pick(NOTE)}else{s.t="coin";s.c=Math.random()<.65?["#f7d154","#b8860b","#fff3b0"]:["#e6edf3","#8a9aa8","#ffffff"]}}
+ function make(burst){const s={x:rnd(-10,W+10),y:burst?rnd(-H*.3,H*.12):rnd(-70,-24),vx:rnd(-8,8),vy:rnd(36,80),a:rnd(0,6.28),va:rnd(-1.5,1.5),t:rnd(0,6.28),vt:rnd(.9,2.6),ro:rnd(0,6.28),vr:rnd(1,3),sw:rnd(0,6.28),sf:rnd(.7,1.6),sa:rnd(8,26),k:rnd(.85,1.35),gl:rnd(0,6.28)};
+  if(kind=="pills"){const r=Math.random();s.ty=r<.42?"cap":r<.74?"tab":"gel";s.c=s.ty=="cap"?pick(CAPS):s.ty=="tab"?pick(TAB):pick(GEL)}
+  else if(Math.random()<.52){s.ty="note";s.v=pick(["1000","2000","5000","10000"]);s.k=rnd(.95,1.3);s.vy=rnd(32,70);s.sa=rnd(14,34)}
+  else{const o=pick(COIN);s.ty="coin";s.v=o.v;s.r=o.r*rnd(.95,1.25);s.vt=rnd(1.4,3.4)}
   P.push(s)}
- function draw(s){const f=Math.abs(Math.cos(s.fl));cx.save();cx.translate(s.x,s.y);
-  if(s.t=="cap"){const w=27*s.k,h=11.5*s.k;cx.rotate(s.a);cx.scale(1,Math.max(.3,f));rr(-w/2,-h/2,w,h,h/2);cx.save();cx.clip();cx.fillStyle=s.c[0];cx.fillRect(-w/2,-h/2,w/2,h);cx.fillStyle=s.c[1];cx.fillRect(0,-h/2,w/2,h);cx.fillStyle="rgba(255,255,255,.5)";cx.fillRect(-w/2+3,-h/2+1.6,w-6,2.2);cx.fillStyle="rgba(0,0,0,.12)";cx.fillRect(-w/2,h/2-2.6,w,2.6);cx.restore();rr(-w/2,-h/2,w,h,h/2);cx.strokeStyle="rgba(0,0,0,.28)";cx.lineWidth=1;cx.stroke()}
-  else if(s.t=="tab"){const r=7*s.k;cx.rotate(s.a);cx.scale(1,Math.max(.35,f));cx.beginPath();cx.arc(0,0,r,0,6.283);cx.fillStyle="#f4fbff";cx.fill();cx.strokeStyle="rgba(0,0,0,.25)";cx.lineWidth=1;cx.stroke();cx.beginPath();cx.moveTo(-r*.8,0);cx.lineTo(r*.8,0);cx.strokeStyle=s.c[0];cx.lineWidth=1.6;cx.stroke()}
-  else if(s.t=="gel"){const w=19*s.k,h=11*s.k;cx.rotate(s.a);cx.scale(1,Math.max(.4,f));cx.beginPath();cx.ellipse(0,0,w/2,h/2,0,0,6.283);cx.fillStyle="#ffbf3c";cx.fill();cx.strokeStyle="rgba(120,60,0,.45)";cx.lineWidth=1;cx.stroke();cx.beginPath();cx.ellipse(-w*.12,-h*.15,w*.28,h*.16,0,0,6.283);cx.fillStyle="rgba(255,255,255,.65)";cx.fill()}
-  else if(s.t=="note"){const w=50*s.k,h=25*s.k;cx.rotate(Math.sin(s.a*.5)*.8);cx.scale(Math.max(.22,Math.abs(Math.cos(s.fl*.55))),1);rr(-w/2,-h/2,w,h,3);cx.fillStyle=s.c[2];cx.fill();rr(-w/2+3,-h/2+3,w-6,h-6,2);cx.fillStyle=s.c[1];cx.fill();cx.beginPath();cx.arc(0,0,h*.28,0,6.283);cx.fillStyle="rgba(255,255,255,.28)";cx.fill();cx.strokeStyle=s.c[2];cx.lineWidth=1;cx.stroke();cx.fillStyle="#fff";cx.font="bold "+Math.round(8*s.k)+"px system-ui,sans-serif";cx.textAlign="center";cx.textBaseline="middle";cx.fillText(s.c[0],0,.5);cx.font="bold 6px system-ui,sans-serif";cx.fillText("F",-w/2+7,-h/2+7);cx.fillText("F",w/2-7,h/2-7)}
-  else{const r=11*s.k;cx.scale(Math.max(.14,f),1);cx.beginPath();cx.arc(0,0,r,0,6.283);cx.fillStyle=s.c[0];cx.fill();cx.lineWidth=2;cx.strokeStyle=s.c[1];cx.stroke();cx.beginPath();cx.arc(0,0,r*.68,0,6.283);cx.strokeStyle=s.c[2];cx.lineWidth=1;cx.stroke();cx.fillStyle=s.c[1];cx.font="bold "+Math.round(r*.95)+"px system-ui,sans-serif";cx.textAlign="center";cx.textBaseline="middle";cx.fillText("F",0,1)}
-  cx.restore()}
+ function dCap(s){const r=7.4*s.k,L=33*s.k,Lc=Math.max(r*2.04,L*Math.abs(Math.cos(s.t))),w=Lc,h=r*2;cx.rotate(s.a);
+  cx.save();cx.shadowColor="rgba(0,0,0,.35)";cx.shadowBlur=6;cx.shadowOffsetY=3;rrc(cx,-w/2,-h/2,w,h,r);cx.fillStyle="#fff";cx.fill();cx.restore();
+  rrc(cx,-w/2,-h/2,w,h,r);cx.save();cx.clip();cx.fillStyle=s.c[0];cx.fillRect(-w/2,-h/2,w/2,h);cx.fillStyle=s.c[1];cx.fillRect(0,-h/2,w/2+1,h);
+  cx.fillStyle="rgba(0,0,0,.22)";cx.fillRect(-.8,-h/2,1.6,h);cx.fillStyle="rgba(255,255,255,.18)";cx.fillRect(.8,-h/2,1,h);
+  const hl=.34+.07*Math.sin(s.ro),g=cx.createLinearGradient(0,-h/2,0,h/2);g.addColorStop(0,"rgba(0,0,0,.42)");g.addColorStop(.16,"rgba(0,0,0,.06)");g.addColorStop(hl-.1,"rgba(255,255,255,.1)");g.addColorStop(hl,"rgba(255,255,255,.62)");g.addColorStop(hl+.12,"rgba(255,255,255,.08)");g.addColorStop(.8,"rgba(0,0,0,.14)");g.addColorStop(1,"rgba(0,0,0,.52)");cx.fillStyle=g;cx.fillRect(-w/2,-h/2,w,h);
+  const e=cx.createLinearGradient(-w/2,0,w/2,0);e.addColorStop(0,"rgba(0,0,0,.34)");e.addColorStop(.14,"rgba(0,0,0,0)");e.addColorStop(.86,"rgba(0,0,0,0)");e.addColorStop(1,"rgba(0,0,0,.34)");cx.fillStyle=e;cx.fillRect(-w/2,-h/2,w,h);cx.restore();
+  rrc(cx,-w/2,-h/2,w,h,r);cx.lineWidth=.8;cx.strokeStyle="rgba(0,0,0,.35)";cx.stroke()}
+ function dTab(s){const r=7.8*s.k,a=Math.max(.2,Math.abs(Math.cos(s.t))),dy=r*.26*Math.sqrt(1-a*a)+1.2;cx.rotate(s.a);
+  cx.save();cx.shadowColor="rgba(0,0,0,.35)";cx.shadowBlur=6;cx.shadowOffsetY=3;cx.beginPath();cx.ellipse(0,dy,r,r*a,0,0,6.283);cx.fillStyle="#9fb0b8";cx.fill();cx.restore();
+  cx.beginPath();cx.ellipse(0,dy*.55,r,r*a,0,0,6.283);cx.fillStyle="#b9c8cf";cx.fill();
+  const g=cx.createRadialGradient(-r*.35,-r*a*.4,r*.1,0,0,r*1.05);g.addColorStop(0,"#ffffff");g.addColorStop(.5,s.c);g.addColorStop(1,"#a9bac2");cx.beginPath();cx.ellipse(0,0,r,r*a,0,0,6.283);cx.fillStyle=g;cx.fill();cx.lineWidth=.8;cx.strokeStyle="rgba(0,0,0,.3)";cx.stroke();
+  cx.beginPath();cx.moveTo(-r*.78,0);cx.lineTo(r*.78,0);cx.lineWidth=1.3;cx.strokeStyle="rgba(0,0,0,.3)";cx.stroke();cx.beginPath();cx.moveTo(-r*.78,1.3);cx.lineTo(r*.78,1.3);cx.lineWidth=1;cx.strokeStyle="rgba(255,255,255,.75)";cx.stroke();
+  cx.beginPath();cx.ellipse(-r*.3,-r*a*.4,r*.32,r*a*.16,-.3,0,6.283);cx.fillStyle="rgba(255,255,255,.55)";cx.fill()}
+ function dGel(s){const w=21*s.k,h=11.5*s.k,sx=Math.max(.62,Math.abs(Math.cos(s.t*.7))),sy=Math.max(.5,Math.abs(Math.cos(s.t)));cx.rotate(s.a);cx.scale(sx,sy);
+  cx.save();cx.shadowColor="rgba(0,0,0,.35)";cx.shadowBlur=6;cx.shadowOffsetY=3;cx.beginPath();cx.ellipse(0,0,w/2,h/2,0,0,6.283);cx.fillStyle=s.c[1];cx.fill();cx.restore();
+  const g=cx.createRadialGradient(-w*.18,-h*.22,h*.05,0,0,w*.55);g.addColorStop(0,s.c[0]);g.addColorStop(.5,s.c[1]);g.addColorStop(1,s.c[2]);cx.beginPath();cx.ellipse(0,0,w/2,h/2,0,0,6.283);cx.fillStyle=g;cx.fill();cx.lineWidth=.8;cx.strokeStyle="rgba(90,40,0,.4)";cx.stroke();
+  cx.beginPath();cx.ellipse(0,0,w/2*.96,h/2*.96,0,0,6.283);cx.save();cx.clip();cx.beginPath();cx.moveTo(-w/2,Math.sin(s.ro)*h*.12);cx.quadraticCurveTo(0,Math.sin(s.ro)*h*.3,w/2,Math.sin(s.ro)*h*.12);cx.lineWidth=.9;cx.strokeStyle="rgba(120,60,0,.35)";cx.stroke();cx.restore();
+  cx.beginPath();cx.ellipse(-w*.16,-h*.2,w*.24,h*.13,-.25,0,6.283);cx.fillStyle="rgba(255,255,255,.78)";cx.fill();cx.beginPath();cx.ellipse(w*.18,h*.22,w*.12,h*.06,-.25,0,6.283);cx.fillStyle="rgba(255,255,255,.35)";cx.fill()}
+ function dNote(s){const img=art["n"+s.v],w=33*s.k,h=w*.484,ry=s.t,rx=.85*Math.sin(s.ro),cyy=Math.cos(ry),syy=Math.sin(ry),cxx=Math.cos(rx),sxx=Math.sin(rx),nz=cxx*cyy,F=380;
+  const pt=(x,y)=>{const x1=x*cyy,z1=-x*syy,y2=y*cxx-z1*sxx,z2=y*sxx+z1*cxx,f=F/(F-z2);return[x1*f,y2*f]};
+  const p0=pt(-w,-h),p1=pt(w,-h),p3=pt(-w,h),im=img[nz>=0?0:1],sw=im.width,sh=im.height;
+  cx.rotate(s.a);cx.save();cx.shadowColor="rgba(0,0,0,.4)";cx.shadowBlur=8;cx.shadowOffsetY=4;cx.transform((p1[0]-p0[0])/sw,(p1[1]-p0[1])/sw,(p3[0]-p0[0])/sh,(p3[1]-p0[1])/sh,p0[0],p0[1]);
+  cx.drawImage(im,0,0);cx.restore();cx.transform((p1[0]-p0[0])/sw,(p1[1]-p0[1])/sw,(p3[0]-p0[0])/sh,(p3[1]-p0[1])/sh,p0[0],p0[1]);
+  rrc(cx,0,0,sw,sh,7);cx.fillStyle="rgba(0,0,0,"+((1-Math.abs(nz))*.42).toFixed(3)+")";cx.fill();const gl=Math.pow(Math.max(0,Math.sin(s.gl+T*2.1)),10);if(gl>.02){const g=cx.createLinearGradient(0,0,sw,sh);g.addColorStop(0,"rgba(255,255,255,0)");g.addColorStop(.5,"rgba(255,255,255,"+(gl*.5).toFixed(3)+")");g.addColorStop(1,"rgba(255,255,255,0)");rrc(cx,0,0,sw,sh,7);cx.fillStyle=g;cx.fill()}}
+ function dCoin(s){const r=s.r,c=Math.cos(s.t),a=Math.max(.07,Math.abs(c)),sn=Math.sin(s.t),im=art["c"+s.v][c>=0?0:1],th=r*.2,dy=th*Math.abs(sn);cx.rotate(s.a);
+  const o=COIN.find(x=>x.v==s.v).o;cx.save();cx.shadowColor="rgba(0,0,0,.4)";cx.shadowBlur=7;cx.shadowOffsetY=4;cx.beginPath();cx.ellipse(0,dy,r,r*a,0,0,6.283);cx.fillStyle=o[2];cx.fill();cx.restore();
+  for(let i=4;i>=1;i--){cx.beginPath();cx.ellipse(0,dy*i/4,r,r*a,0,0,6.283);cx.fillStyle=i%2?o[2]:o[1];cx.fill()}
+  cx.save();cx.scale(1,a);cx.drawImage(im,-r,-r,r*2,r*2);cx.restore();
+  cx.beginPath();cx.ellipse(0,0,r,r*a,0,0,6.283);cx.fillStyle="rgba(0,0,0,"+((1-a)*.38).toFixed(3)+")";cx.fill();const gl=Math.pow(Math.max(0,Math.sin(s.gl+T*2.6)),8);if(gl>.02){cx.beginPath();cx.ellipse(-r*.3,-r*a*.3,r*.45,r*a*.28,-.4,0,6.283);cx.fillStyle="rgba(255,255,255,"+(gl*.65).toFixed(3)+")";cx.fill()}}
+ function draw(s){cx.save();cx.translate(s.x,s.y);if(s.ty=="cap")dCap(s);else if(s.ty=="tab")dTab(s);else if(s.ty=="gel")dGel(s);else if(s.ty=="note")dNote(s);else dCoin(s);cx.restore()}
+ function mol(){if(!box||box.childElementCount>7)return;const e=document.createElement("span");e.className="mol";e.textContent=pick(MOL);e.style.left=rnd(4,Math.max(8,(W-110)/W*100))+"%";e.style.top=rnd(14,86)+"%";e.style.fontSize=rnd(10,13)+"px";e.style.animationDuration=rnd(2.2,3.4)+"s";e.addEventListener("animationend",()=>e.remove());box.appendChild(e)}
  function frame(ts){raf=requestAnimationFrame(frame);const dt=Math.min(.033,(ts-last)/1000||.016);last=ts;T+=dt;
   if(em){acc+=dt*RATE;while(acc>=1){acc--;if(P.length<MAX)make(false)}}
-  cx.clearRect(0,0,W,H);
-  for(let i=P.length-1;i>=0;i--){const s=P[i];s.vy=Math.min(s.vy+720*dt,860);s.x+=s.vx*dt+Math.cos(s.sw+T*s.sf)*s.sa*dt;s.y+=s.vy*dt;s.a+=s.va*dt;s.fl+=s.vf*dt;if(s.y>H+80){P.splice(i,1);continue}draw(s)}
+  cx.clearRect(0,0,W,H);const G=kind=="pills"?85:68,VT=kind=="pills"?150:128;
+  for(let i=P.length-1;i>=0;i--){const s=P[i];s.vy=Math.min(s.vy+G*dt,VT);s.x+=s.vx*dt+Math.cos(s.sw+T*s.sf)*s.sa*dt;s.y+=s.vy*dt;s.t+=s.vt*dt;s.ro+=s.vr*dt;
+   if(s.ty=="note"){s.a=Math.sin(s.sw+T*s.sf*.8)*.55+s.va*.1}else s.a+=s.va*dt;
+   if(s.y>H+80){P.splice(i,1);continue}draw(s)}
   if(!em&&!P.length){cancelAnimationFrame(raf);raf=0;cv.style.display="none"}}
  function toast(m){let e=$("toast");if(!e){e=document.createElement("div");e.id="toast";document.body.appendChild(e)}e.textContent=m;e.classList.remove("go");void e.offsetWidth;e.classList.add("go")}
- function start(k){init();const me=++id;kind=k;em=true;acc=0;P=[];for(let i=0;i<(red?10:42);i++)make(true);cv.style.display="block";requestAnimationFrame(()=>cv.classList.add("on"));minEnd=performance.now()+2400;
+ function stopMol(){clearInterval(mt);mt=0}
+ function start(k){init();if(k!="pills")buildArt();const me=++id;kind=k;em=true;acc=0;P=[];for(let i=0;i<(red?6:26);i++)make(true);cv.style.display="block";requestAnimationFrame(()=>cv.classList.add("on"));minEnd=performance.now()+4600;
+  stopMol();if(k=="pills"&&!red){mol();mt=setInterval(mol,330)}
   if(!raf){last=performance.now();raf=requestAnimationFrame(frame)}try{navigator.vibrate&&navigator.vibrate(30)}catch(e){}
-  return{finish(msg){setTimeout(()=>{if(id==me){em=false;cv.classList.remove("on")}if(msg)toast(msg)},Math.max(0,minEnd-performance.now()))},cancel(){if(id==me){em=false;cv.classList.remove("on")}}}}
+  return{finish(msg){setTimeout(()=>{if(id==me){em=false;cv.classList.remove("on");stopMol()}if(msg)toast(msg)},Math.max(0,minEnd-performance.now()))},cancel(){if(id==me){em=false;cv.classList.remove("on");stopMol()}}}}
  return{start}})();
 async function signOut(){if(Object.keys(P.v).length+Object.keys(P.c).length+Object.keys(P.b).length&&!confirm("Des modifications n'ont pas été envoyées. Se déconnecter quand même ?"))return;
  try{await pca.logoutRedirect({account:pca.getAllAccounts()[0],postLogoutRedirectUri:location.origin+location.pathname})}catch(e){$("st").textContent="⚠ "+e.message}}
