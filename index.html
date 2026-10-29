@@ -110,6 +110,7 @@ td input{width:92px;padding:6px;text-align:right}td input.pd{outline:2px solid v
 .sv tr.e>:first-child{background:linear-gradient(135deg,#4a1226,#80233f);color:#ffb8cb}
 .sv tr.e>td:not(:first-child):not(:last-child){background:#33161f}
 .sv tr:not(.h)>:nth-child(2){color:#ffb8cb}
+.sv tr:not(.h){height:56px}.sv tr:not(.h)>td{vertical-align:middle}
 
 /* ===== BILAN : tableau des versements, lisibilité alignée sur le tableau de Recouvrement (.sv) ===== */
 .bt{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
@@ -249,7 +250,9 @@ async function recou(){const sh=enc("SOLVABILITÉ"),d=await g(`/worksheets('${sh
  <text id="pcv" x="90" y="91" text-anchor="middle" fill="#f1f7f7" font-size="36" font-weight="800" letter-spacing="-.5">${Math.round(pc*100)}%</text>
  <text x="90" y="106" text-anchor="middle" fill="#6ff0a8" font-size="6.1" font-weight="700" letter-spacing=".35">TAUX DE RECOUVREMENT NPSP</text>
  <text x="90" y="116" text-anchor="middle" fill="#6ff0a8" font-size="6.1" font-weight="700" letter-spacing=".35">EN ${mm}</text></svg>
- <h2 style="font-size:15px">${T[0][0]}</h2><div class="sc"><table class="sv">${T.slice(1,6).map((r,i)=>`<tr class="${cl[i]}">${r.map((c,j)=>i==0?`<th>${c}</th>`:`<td>${c}</td>`).join("")}</tr>`).join("")}</table></div><p class="fn">${T[6][0]||""}</p>`;countUp($("pcv"),Math.round(pc*100))}
+ <h2 style="font-size:15px">${T[0][0]}</h2><div class="sc"><table class="sv">${T.slice(1,6).map((r,i)=>`<tr class="${cl[i]}">${r.map((c,j)=>i==0?`<th>${c}</th>`:`<td>${j==0&&/^\s*Factures échues/i.test(c)?"Factures échues **":c}</td>`).join("")}</tr>`).join("")}</table></div><p class="fn">${T[6][0]||""}</p><p class="fn">** Factures échues depuis le 1er janvier de l'année en cours</p>`;eqRows();countUp($("pcv"),Math.round(pc*100))}
+function eqRows(){const rs=[...document.querySelectorAll(".sv tr:not(.h)")];if(!rs.length)return;rs.forEach(r=>r.style.height="");const m=Math.max(...rs.map(r=>r.getBoundingClientRect().height));rs.forEach(r=>r.style.height=Math.ceil(m)+"px")}
+addEventListener("resize",()=>{if(document.querySelector(".sv"))eqRows()})
 function countUp(e,to){if(!e||matchMedia("(prefers-reduced-motion: reduce)").matches)return;const t0=performance.now(),D=1700;e.textContent="0%";(function f(t){const p=Math.min(1,(t-t0)/D),v=Math.round(to*(1-Math.pow(1-p,3)));e.textContent=v+"%";if(p<1&&e.isConnected)requestAnimationFrame(f)})(t0)}
 /* ====== ANIMATION D'ENVOI VERS EXCEL : pluie 3D de gélules, comprimés et capsules molles (inventaire) / de billets et pièces F CFA (recettes) ====== */
 const FX=(()=>{let cv,cx,P=[],W=0,H=0,raf=0,em=false,kind="",last=0,T=0,acc=0,minEnd=0,id=0,mt=0,box=null,art=null,fade=0;
