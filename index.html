@@ -125,6 +125,20 @@ td input{width:92px;padding:6px;text-align:right}td input.pd{outline:2px solid v
 .bt td input:focus{border-color:#3AFEEB;box-shadow:0 0 0 2px rgba(58,254,235,.35)}
 .bt td.tt{font-size:14px;font-weight:900;min-width:100px}
 .bt tr:not(:last-child) td{border-bottom:1px solid rgba(232,251,255,.16)}
+
+/* ===== v5 : Bilan - lignes 2, 3 et 4 de même hauteur ===== */
+.bt td{vertical-align:middle}.bt td input{box-sizing:border-box;height:38px}
+.bt tr:not(:first-child){height:60px}
+/* ===== v5 : Recouvrement - séparations fixes (comme le tableau des versements) ===== */
+.sv{border-collapse:separate;border-spacing:0}
+.sv th,.sv td{border:0;border-bottom:1px solid #1e4650;border-right:1px solid #173a43;vertical-align:middle}
+.sv th{padding:11px 8px;font-weight:800;letter-spacing:.4px}
+.sv tr:not(:last-child)>td{border-bottom:1px solid rgba(232,251,255,.16)}
+.sv tr>:first-child,.sv tr>:last-child{z-index:2}
+.sv tr.h>:first-child{border-right:2px solid #f2c14e}
+.sv tr.h>:last-child{border-left:2px solid #f2c14e}
+.sv tr:not(.h)>:first-child{border-right:2px solid var(--lc,#f2c14e)}
+.sv tr:not(.h)>:last-child{border-left:2px solid var(--lc,#f2c14e)}
 </style></head><body>
 <div id="login"><img src="icon-512.png" alt=""><h1>Gestion Pharmacie - EPHD Sandégué 2027</h1><p>Connectez-vous avec votre compte Microsoft pour accéder au classeur.</p><button class="p" onclick="signIn()">Se connecter</button><p id="err" style="color:var(--ko)"></p></div>
 <div id="app" class="hide">
@@ -221,7 +235,7 @@ async function bilan(m){const d=await g(`/worksheets('${enc(m)}')/range(address=
  <div class="sc"><table class="bt"><tr><th>${V[r][1]}</th>${V[r].slice(2,13).map(x=>`<th>${x}</th>`).join("")}<th>Total</th></tr>
  <tr class="r1"><td class="lb">${V[r+1][1]}</td>${inp(R0+1)}<td class="tt" id="tt1">${num(V[r+1][13])}</td></tr><tr class="r2"><td class="lb">${V[r+2][1]}</td>${inp(R0+2)}<td class="tt" id="tt2">${num(V[r+2][13])}</td></tr>
  <tr class="r3"><td class="lb">${V[r+3][1]}</td>${V[r+3].slice(2,13).map((x,j)=>`<td id="rc${j+2}">${num(x)}</td>`).join("")}<td class="tt" id="tt3">${num(V[r+3][13])}</td></tr></table></div>
- <p style="color:var(--mut);font-size:12px">Saisissez les montants versés et les dépenses,<br>puis appuyez sur « Je valide les recettes. ».</p>`}
+ <p style="color:var(--mut);font-size:12px">Saisissez les montants versés et les dépenses,<br>puis appuyez sur « Je valide les recettes. ».</p>`;eqBil()}
 const bv=(row,j)=>{const k=BIL.m+S+row+S+col(j);return k in P.b?P.b[k]:BIL.V[row-74][j]};
 function recalc(){if(!BIL)return;const R0=74+BIL.r,t=[0,0];for(let j=2;j<13;j++){const a=+bv(R0+1,j)||0,b=+bv(R0+2,j)||0;t[0]+=a;t[1]+=b;const e=$("rc"+j);if(e)e.textContent=num(a+b)}
  [t[0],t[1],t[0]+t[1]].forEach((v,i)=>{const e=$("tt"+(i+1));if(e)e.textContent=num(v)})}
@@ -250,7 +264,7 @@ async function recou(){const sh=enc("SOLVABILITÉ"),d=await g(`/worksheets('${sh
  <text id="pcv" x="90" y="91" text-anchor="middle" fill="#f1f7f7" font-size="36" font-weight="800" letter-spacing="-.5">${Math.round(pc*100)}%</text>
  <text x="90" y="106" text-anchor="middle" fill="#6ff0a8" font-size="6.1" font-weight="700" letter-spacing=".35">TAUX DE RECOUVREMENT NPSP</text>
  <text x="90" y="116" text-anchor="middle" fill="#6ff0a8" font-size="6.1" font-weight="700" letter-spacing=".35">EN ${mm}</text></svg>
- <h2 style="font-size:15px">${T[0][0]}</h2><div class="sc"><table class="sv">${T.slice(1,6).map((r,i)=>`<tr class="${cl[i]}">${r.map((c,j)=>i==0?`<th>${c}</th>`:`<td>${j==0&&/^\s*Factures échues/i.test(c)?"Factures échues **":c}</td>`).join("")}</tr>`).join("")}</table></div><p class="fn">${fixFn(T[6][0]||"")}</p><p class="fn">** Factures échues depuis le 1er janvier de l'année en cours.</p>`;eqRows();fitRec();countUp($("pcv"),Math.round(pc*100))}
+ <h2 style="font-size:15px">${T[0][0]}</h2><div class="sc"><table class="sv">${T.slice(1,6).map((r,i)=>`<tr class="${cl[i]}">${r.map((c,j)=>i==0?`<th>${c}</th>`:`<td>${j==0&&/^\s*Factures échues/i.test(c)?"FACTURES ÉCHUES **":c}</td>`).join("")}</tr>`).join("")}</table></div><p class="fn">${fixFn(T[6][0]||"")}</p><p class="fn">** Factures échues depuis le 1er janvier de l'année en cours.</p>`;eqRows();fitRec();countUp($("pcv"),Math.round(pc*100))}
 /* Recouvrement : tout le contenu tient sur la hauteur de l'écran (pas de défilement vertical) ; seul le tableau défile horizontalement */
 const fixFn=t=>{t=String(t).trim().replace(/^\*\s*(?!\*)/,"* ");return/[.!?]$/.test(t)?t:t?t+".":t};
 function fitRec(){const m=$("main"),sv=document.querySelector(".ring");if(!sv||cur!=="rec")return;
@@ -259,6 +273,8 @@ function fitRec(){const m=$("main"),sv=document.querySelector(".ring");if(!sv||c
  document.querySelectorAll("main h2").forEach(h=>h.style.margin="2px 0 6px");document.querySelectorAll("main .fn").forEach(f=>f.style.margin="4px 2px");
  sv.style.width=sv.style.height="100px";const rest=m.scrollHeight-100,sz=Math.max(110,Math.min(260,innerHeight-hd-rest-1));
  sv.style.width=sv.style.height=sz+"px"}
+function eqBil(){const rs=[...document.querySelectorAll(".bt tr:not(:first-child)")];if(!rs.length)return;rs.forEach(r=>r.style.height="");const m=Math.max(...rs.map(r=>r.getBoundingClientRect().height));rs.forEach(r=>r.style.height=Math.ceil(m)+"px")}
+addEventListener("resize",()=>{if(document.querySelector(".bt"))eqBil()});
 function eqRows(){const rs=[...document.querySelectorAll(".sv tr:not(.h)")];if(!rs.length)return;rs.forEach(r=>r.style.height="");const m=Math.max(...rs.map(r=>r.getBoundingClientRect().height));rs.forEach(r=>r.style.height=Math.ceil(m)+"px")}
 addEventListener("resize",()=>{if(document.querySelector(".sv")){eqRows();fitRec()}})
 function countUp(e,to){if(!e||matchMedia("(prefers-reduced-motion: reduce)").matches)return;const t0=performance.now(),D=1700;e.textContent="0%";(function f(t){const p=Math.min(1,(t-t0)/D),v=Math.round(to*(1-Math.pow(1-p,3)));e.textContent=v+"%";if(p<1&&e.isConnected)requestAnimationFrame(f)})(t0)}
