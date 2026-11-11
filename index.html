@@ -139,6 +139,52 @@ td input{width:92px;padding:6px;text-align:right}td input.pd{outline:2px solid v
 .sv tr.h>:last-child{border-left:2px solid #f2c14e}
 .sv tr:not(.h)>:first-child{border-right:2px solid var(--lc,#f2c14e)}
 .sv tr:not(.h)>:last-child{border-left:2px solid var(--lc,#f2c14e)}
+
+/* ===== v6 : onglet RÉCAPITULATIF ===== */
+nav button{font-size:12.5px;white-space:nowrap}
+:root{--hh:120px}
+.rc-nav{position:sticky;top:var(--hh);z-index:4;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:8px 0 10px;background:linear-gradient(var(--bg) 82%,transparent)}
+.rc-nav button{padding:9px 2px;font-size:12px;font-weight:700;white-space:nowrap;border-radius:999px;background:#0e2a31;color:var(--mut);border:1px solid #1e4650}
+.rc-nav button.on{background:linear-gradient(135deg,#3AFEEB,#4be38a);color:#04282b;border-color:transparent;box-shadow:0 0 14px rgba(58,254,235,.35)}
+.rc-k{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:2px 0 12px}
+.rc-k div{background:var(--card);border-radius:12px;padding:10px 8px;text-align:center;border-top:3px solid var(--c,#3AFEEB)}
+.rc-k small{display:block;color:var(--mut);font-size:10px;text-transform:uppercase;letter-spacing:.3px;line-height:1.2}
+.rc-k b{font-size:20px}
+details.rc-c{background:var(--card);border-radius:14px;margin-bottom:10px;border-left:4px solid var(--c,#3AFEEB);overflow:hidden}
+details.rc-c>summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px;font-weight:800;font-size:13px;letter-spacing:.2px;cursor:pointer}
+details.rc-c>summary::-webkit-details-marker{display:none}
+details.rc-c>summary b{min-width:32px;text-align:center;padding:3px 9px;border-radius:999px;background:var(--c,#3AFEEB);color:#04282b;font-size:13px}
+details.rc-c ul{list-style:none;margin:0;padding:0 8px 8px}
+details.rc-c li{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:8px 6px;border-top:1px solid #1a4049;font-size:13px}
+details.rc-c li .nm{font-weight:600;overflow-wrap:anywhere}details.rc-c li .q{color:var(--c,#3AFEEB);font-weight:800;white-space:nowrap;font-size:12px;text-align:right}
+.rc-e{margin:0;padding:0 12px 12px;color:var(--mut);font-size:13px}
+.rc-ok{--c:#4be38a}.rc-urg{--c:#ff6b6b}.rc-sug{--c:#ffa94d}.rc-rup{--c:#b794ff}
+.rc-ctl{display:flex;gap:8px;align-items:center;margin-bottom:10px}.rc-ctl select{flex:1}.rc-ctl.dis select{opacity:.45}
+.rc-seg{display:flex;border:1px solid #1e4650;border-radius:10px;overflow:hidden}
+.rc-seg button{border:0;border-radius:0;background:#0e2a31;color:var(--mut);padding:10px 12px;font-size:13px;font-weight:700}.rc-seg button.on{background:var(--ac);color:#04282b}
+.rc-s{background:var(--card);border-radius:14px;padding:12px;margin-bottom:12px}
+.rc-s h3{margin:0 0 2px;font-size:13px;letter-spacing:.3px;color:#ffd77a}.rc-s .sb{color:var(--mut);font-size:11px;margin-bottom:8px}
+.rc-s ol{list-style:none;margin:0;padding:0}.rc-s li{display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid #1a4049;font-size:12.5px}
+.rk{flex:0 0 24px;height:24px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:11px;background:#0e2a31;color:var(--ac)}
+.rc-s li:nth-child(-n+3) .rk{background:linear-gradient(135deg,#a8780e,#f2c14e);color:#2b1c00}
+.rb{flex:1;min-width:0}.rb .nm{display:block;font-weight:600;overflow-wrap:anywhere}.bar{display:block;height:5px;border-radius:3px;background:#0e2a31;margin-top:4px;overflow:hidden}
+.bar s{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,#3AFEEB,#4be38a);animation:grow .9s ease both}@keyframes grow{from{width:0!important}}
+.vl{font-size:12px;text-align:right;white-space:nowrap}.vl small{display:block;color:var(--mut);font-weight:600}
+.rc-s li.m80{box-shadow:inset 0 -2px 0 #ffd77a}.tag80{display:inline-block;margin-left:6px;padding:1px 6px;border-radius:999px;background:#ffd77a;color:#2b1c00;font-size:10px;font-weight:800}
+.rc-btn{width:100%;margin-top:10px;padding:11px;font-weight:700;color:var(--ac);background:#0e2a31;border:1px solid var(--ac)}.rc-btn.on{background:var(--ac);color:#04282b}
+.rc-ch{margin-top:10px;background:#0b2a31;border-radius:12px;padding:8px 6px}.rc-ch svg{display:block;width:100%;height:auto}
+.rc-ch text{font-family:system-ui,sans-serif;fill:#b9d6db;font-size:8.5px}.rc-ch .tt{fill:#fff;font-weight:800;font-size:10px}
+.lgd{display:flex;flex-wrap:wrap;gap:10px;font-size:11px;color:var(--mut);margin:6px 4px 2px}.lgd i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+#rc-tip{margin:8px 2px 0;padding:8px 10px;border-radius:10px;background:#0e2a31;font-size:12.5px;line-height:1.5;min-height:20px}
+.rc-t td,.rc-t th{font-size:12px}.rc-t tr.tot td{background:linear-gradient(135deg,#3b2b08,#5e4512);color:#ffd77a;font-weight:800}
+.rc-f{display:flex;gap:6px;overflow-x:auto;padding:2px 0 10px}.rc-f button{flex:0 0 auto;padding:7px 12px;border-radius:999px;font-size:12px;font-weight:700;background:#0e2a31;color:var(--mut);border:1px solid #1e4650}
+.rc-f button.on{background:var(--ac);color:#04282b;border-color:transparent}
+details.pc{background:var(--card);border-radius:14px;margin-bottom:8px;border-left:4px solid var(--c,#3AFEEB)}
+details.pc>summary{list-style:none;display:grid;grid-template-columns:1fr auto;gap:2px 8px;padding:11px 12px;cursor:pointer}details.pc>summary::-webkit-details-marker{display:none}
+.pn{font-weight:700;font-size:14px;overflow-wrap:anywhere}.pill{justify-self:end;align-self:start;padding:2px 9px;border-radius:999px;font-size:10px;font-weight:800;background:var(--c);color:#04282b;white-space:nowrap}
+.ps{grid-column:1/-1;color:var(--mut);font-size:12px}
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 12px 12px}.pg div{background:#0e2a31;border-radius:10px;padding:8px 9px}.pg small{display:block;color:var(--mut);font-size:10px;text-transform:uppercase;letter-spacing:.2px}.pg b{font-size:14px}.pg .w{grid-column:1/-1}
+.up{color:#4be38a}.dn{color:#ff6b6b}.pc.ok{--c:#4be38a}.pc.urg{--c:#ff6b6b}.pc.sug{--c:#ffa94d}.pc.rup{--c:#b794ff}.pc.sv{--c:#5aa9ff}
 </style></head><body>
 <div id="login"><img src="icon-512.png" alt=""><h1>Gestion Pharmacie - EPHD Sandégué 2027</h1><p>Connectez-vous avec votre compte Microsoft pour accéder au classeur.</p><button class="p" onclick="signIn()">Se connecter</button><p id="err" style="color:var(--ko)"></p></div>
 <div id="app" class="hide">
@@ -148,7 +194,7 @@ td input{width:92px;padding:6px;text-align:right}td input.pd{outline:2px solid v
 <div class="srow"><div id="st"></div><button class="out" onclick="signOut()">Se déconnecter</button></div><div id="bar"><i></i></div><div id="fin" class="hide">✔ INVENTAIRE TERMINÉ</div></header>
 <main id="main"></main>
 <div id="act"><button id="b-stock" class="p" onclick="valider()">Je valide l'inventaire.</button><button id="b-bilan" class="p hide" onclick="validerB()">Je valide les recettes.</button></div>
-<nav><button id="t-stock" class="on" onclick="tab('stock')">📦 Stock</button><button id="t-bilan" onclick="tab('bilan')">💰 Bilan</button><button id="t-rec" onclick="tab('rec')">📈 Recouvrement</button></nav>
+<nav><button id="t-stock" class="on" onclick="tab('stock')">📦 Stock</button><button id="t-bilan" onclick="tab('bilan')">💰 Bilan</button><button id="t-rec" onclick="tab('rec')">📈 Recouvrement</button><button id="t-recap" onclick="tab('recap')">📋 Récap.</button></nav>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@azure/msal-browser@2.38.3/lib/msal-browser.min.js"></script>
 <script>
@@ -175,9 +221,9 @@ async function g(path,opt={}){const r=await fetch(`https://graph.microsoft.com/v
 const col=n=>{let s="";n++;while(n){s=String.fromCharCode(65+(n-1)%26)+s;n=Math.floor((n-1)/26)}return s};
 const parse=a=>{const m=a.split("!")[1].replace(/\$/g,"").match(/([A-Z]+)(\d+):/);return{row:+m[2],col:[...m[1]].reduce((x,c)=>x*26+c.charCodeAt(0)-64,0)-1}};
 const put=(addr,sheet,v)=>g(`/worksheets('${enc(sheet)}')/range(address='${addr}')`,{method:"PATCH",body:J({values:[[v]]})});
-function tab(t){cur=t;for(const k of["stock","bilan","rec"])$("t-"+k).classList.toggle("on",k==t);
- const s=t=="stock";$("act").classList.toggle("hide",t=="rec");$("b-stock").classList.toggle("hide",!s);$("b-bilan").classList.toggle("hide",t!="bilan");
- for(const i of["sf","mode","bar"])$(i).classList.toggle("hide",!s);$("mois").classList.toggle("hide",t=="rec");$("fin").classList.add("hide");$("main").style.cssText="";load()}
+function tab(t){cur=t;for(const k of["stock","bilan","rec","recap"])$("t-"+k).classList.toggle("on",k==t);
+ const s=t=="stock";$("act").classList.toggle("hide",t=="rec"||t=="recap");$("st").dataset.s="";$("b-stock").classList.toggle("hide",!s);$("b-bilan").classList.toggle("hide",t!="bilan");
+ for(const i of["sf","mode","bar"])$(i).classList.toggle("hide",!s);$("mois").classList.toggle("hide",t=="rec"||t=="recap");$("fin").classList.add("hide");$("main").style.cssText="";load()}
 const saveCache=()=>localStorage.setItem("op_notes",J(CACHE));
 /* Notes : base = feuille NOTES_EXCEL (exportée par la macro à chaque enregistrement du classeur) ;
    par-dessus : notes envoyées par l'appli et pas encore converties/exportées par Excel (NOTES_APP + cache local). */
@@ -191,7 +237,7 @@ async function loadNotes(){NX={};NXT=false;NOTES={};NROWS=[];NT=false;const pend
  if(ch)saveCache()}
 async function load(){if(editing)return;$("rf").classList.add("spin");try{token=await tok();const m=$("mois").value;
  if(cur=="stock"){const d=await g(`/tables('STOCK_${enc(m)}')/range`);H=d.values[0];R=d.values.slice(1);origin=parse(d.address);await loadNotes();render();$("st").dataset.t="Synchronisé à "+new Date().toLocaleTimeString("fr-FR")}
- else if(cur=="bilan")await bilan(m);else await recou();stat()}catch(e){$("st").textContent="⚠ "+e.message}$("rf").classList.remove("spin")}
+ else if(cur=="bilan")await bilan(m);else if(cur=="recap")await recap();else await recou();stat()}catch(e){$("st").textContent="⚠ "+e.message}$("rf").classList.remove("spin")}
 const ix=n=>H.indexOf(n),NK=(p,n)=>$("mois").value+S+p+S+n,pr=r=>r[ix("PRODUITS (DCI)")];
 const val=(r,n)=>{const k=NK(pr(r),n);return k in P.v?P.v[k]:r[ix(n)]};
 const rows=()=>R.map((r,i)=>({r,i})).filter(x=>pr(x.r)&&String(pr(x.r)).trim().toUpperCase()!=="TOTAL");
@@ -279,6 +325,88 @@ function eqRows(){const rs=[...document.querySelectorAll(".sv tr:not(.h)")];if(!
 addEventListener("resize",()=>{if(document.querySelector(".sv")){eqRows();fitRec()}})
 function countUp(e,to){if(!e||matchMedia("(prefers-reduced-motion: reduce)").matches)return;const t0=performance.now(),D=1700;e.textContent="0%";(function f(t){const p=Math.min(1,(t-t0)/D),v=Math.round(to*(1-Math.pow(1-p,3)));e.textContent=v+"%";if(p<1&&e.isConnected)requestAnimationFrame(f)})(t0)}
 /* ====== ANIMATION D'ENVOI VERS EXCEL : pluie 3D de gélules, comprimés et capsules molles (inventaire) / de billets et pièces F CFA (recettes) ====== */
+/* ====== RÉCAPITULATIF (feuille RÉCAPITULATIF : tables RECAP, RECAP2, RECAP_TRÉSORERIE) ====== */
+const RC={d:null,P:[],T:null,sec:"cmd",ref:Math.max(0,new Date().getMonth()-1),per:"mois",flt:"all",q:"",par:false};
+const nz=s=>String(s==null?"":s).normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^A-Za-z0-9%]/g,"").toUpperCase();
+const nv=x=>typeof x==="number"?x:(parseFloat(String(x==null?"":x).replace(/[\s\u00a0\u202f]/g,"").replace(",","."))||0);
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fn=(v,d=0)=>(+v||0).toLocaleString("fr-FR",{minimumFractionDigits:d,maximumFractionDigits:d});
+const pc1=(v,d=1)=>fn((+v||0)*100,d)+" %",fc=v=>fn(v)+"\u00a0F\u00a0CFA",kk=v=>v>=1e6?fn(v/1e6,1)+" M":v>=1e3?fn(v/1e3)+" k":fn(v);
+const dv=(v,f)=>typeof v==="number"?f(v):"—";
+const tcol=t=>{const c={};t.h.forEach((h,i)=>c[nz(h)]=i);return c};
+const CAT={urg:["URGENT","À COMMANDER EN URGENCE"],sug:["SUGGÉRÉ","SUGGESTIONS"],ok:["SUFFISANT","STOCK SUFFISANT"],rup:["RUPTURE","NON DISPONIBLES (STOCK = 0)"],sv:["À SURVEILLER","À SURVEILLER"]};
+function prepRC(){const A=RC.d.a,B=RC.d.b,ca=tcol(A),cb=tcol(B),G=(r,c,k)=>r[c[nz(k)]],M2={};
+ B.r.forEach(r=>{const n=String(G(r,cb,"PRODUITS (DCI)")||"").trim();if(n)M2[n]={pa:nv(G(r,cb,"PRIX D'ACHAT UNITAIRE")),pv:nv(G(r,cb,"PRIX DE VENTE UNITAIRE")),mg:nv(G(r,cb,"MARGE UNITAIRE")),va:String(G(r,cb,"VARIATION DES VENTES")||""),v:MOIS.map(m=>nv(G(r,cb,m))),ca:nv(G(r,cb,"CHIFFRE D'AFFAIRES")),pca:nv(G(r,cb,"% CA"))}});
+ RC.P=[];A.r.forEach(r=>{const n=String(G(r,ca,"PRODUITS (DCI)")||"").trim();if(!n)return;
+  const o=String(G(r,ca,"OBSERVATIONS")||""),sd=G(r,ca,"STOCK DISPO & UTILISABLE"),m2=M2[n]||{pa:0,pv:0,mg:0,va:"",v:MOIS.map(()=>0),ca:0,pca:0};
+  const cat=/COMMANDER EN URGENCE/i.test(o)?"urg":/SUG/i.test(o)?"sug":/STOCK SUFFISANT/i.test(o)?"ok":"sv",rup=(sd===0||sd==="");
+  RC.P.push({n,u:G(r,ca,"UNITE DE COMPTAGE")||"",mg:nv(G(r,ca,"MARGE UNITAIRE"))||m2.mg,q:MOIS.map(m=>nv(G(r,ca,m))),tot:nv(G(r,ca,"TOTAL")),cmm:G(r,ca,"CONSOMMATION MENSUELLE MOYENNE"),sd,ms:G(r,ca,"MOIS DE STOCK DISPONIBLE"),obs:o,pca:nv(G(r,ca,"% CA"))||m2.pca,cat,rup,m2})});
+ const C=RC.d.c,cc=tcol(C),lab=r=>String(r[0]||"").trim(),T={m:[],tot:null,fin:null};
+ C.r.forEach(r=>{const l=lab(r),o={l,ca:nv(r[cc.CHIFFREDAFFAIRE]),rec:nv(r[cc.RECETTES]),ver:nv(r[cc.MONTANTTOTALVERSE]),dep:nv(r[cc.DEPENSES]),tx:nv(r[cc.TAUXDERECOUVREMENTNPSP])};
+  if(MOIS.includes(l))T.m.push(o);else if(/^total/i.test(l))T.tot=o;else if(/^fin/i.test(l))T.fin=o});RC.T=T}
+async function recap(){const T=async n=>{const d=await g(`/tables('${enc(n)}')/range`);return{h:d.values[0].map(String),r:d.values.slice(1)}};
+ const[a,b,c]=await Promise.all(["RECAP","RECAP2","RECAP_TRÉSORERIE"].map(T));RC.d={a,b,c};prepRC();
+ $("st").dataset.s="Récapitulatif synchronisé à "+new Date().toLocaleTimeString("fr-FR");drawRecap()}
+function rcSet(k,v){RC[k]=v;if(k=="q"||k=="flt"){rcList();return}if(k=="par"){drawRecap();return}drawRecap()}
+function drawRecap(){if(!RC.d||cur!="recap")return;const S=[["cmd","🛒 Commande"],["stat","📊 Ventes"],["tre","💶 Trésorerie"],["prod","💊 Produits"]],f={cmd:rcCmd,stat:rcStat,tre:rcTre,prod:rcProd}[RC.sec];
+ $("main").innerHTML=`<h2 style="margin-bottom:0">RÉCAPITULATIF</h2><div class="rc-nav">${S.map(([k,l])=>`<button class="${RC.sec==k?"on":""}" onclick="rcSet('sec','${k}')">${l}</button>`).join("")}</div>${f()}`;
+ const hd=document.querySelector("header").offsetHeight;document.documentElement.style.setProperty("--hh",hd+"px");if(RC.sec=="prod")rcList()}
+addEventListener("resize",()=>{if(cur=="recap")document.documentElement.style.setProperty("--hh",document.querySelector("header").offsetHeight+"px")});
+/* --- COMMANDE --- */
+const qte=o=>{const m=String(o).match(/^\s*([\d\s\u00a0\u202f]+)/);return m?m[1].replace(/\s+/g," ").trim():""};
+function rcCmd(){const P=RC.P,L={ok:P.filter(p=>p.cat=="ok"&&!p.rup),urg:P.filter(p=>p.cat=="urg"),sug:P.filter(p=>p.cat=="sug"),rup:P.filter(p=>p.rup)};
+ const card=(k,ico,tit,a,fm,open)=>`<details class="rc-c rc-${k}" ${open?"open":""}><summary><span>${ico} ${tit}</span><b>${a.length}</b></summary>${a.length?`<ul>${a.map(fm).join("")}</ul>`:`<p class="rc-e">Aucun produit</p>`}</details>`;
+ const li=(p,q)=>`<li><span class="nm">${esc(p.n)}</span><span class="q">${q}</span></li>`;
+ return`<div class="rc-k"><div style="--c:#5aa9ff"><small>Références enregistrées</small><b>${P.length}</b></div><div style="--c:#ff6b6b"><small>À commander en urgence</small><b>${L.urg.length}</b></div><div style="--c:#b794ff"><small>Références non disponibles</small><b>${L.rup.length}</b></div></div>`
+ +card("ok","✅","STOCK SUFFISANT",L.ok,p=>li(p,`${dv(p.sd,v=>fn(v))} ${esc(p.u)}<br><small>${dv(p.ms,v=>fn(v,1))} mois</small>`),false)
+ +card("urg","🚨","PRODUITS À COMMANDER EN URGENCE",L.urg,p=>li(p,`${esc(qte(p.obs))} ${esc(p.u)}<br><small>stock : ${dv(p.sd,v=>fn(v))}</small>`),true)
+ +card("sug","💡","SUGGESTIONS",L.sug,p=>li(p,`${esc(qte(p.obs))} ${esc(p.u)}<br><small>stock : ${dv(p.sd,v=>fn(v))}</small>`),true)
+ +card("rup","⛔","PRODUITS NON DISPONIBLES (STOCK = 0)",L.rup,p=>li(p,esc(p.u)),true)}
+/* --- STATISTIQUE DES VENTES --- */
+function rcStat(){const P=RC.P,r=RC.ref,an=RC.per=="an",lib=an?"DE L'ANNÉE 2027":"MOIS : "+MOIS[r];
+ const qv=p=>an?p.tot:p.q[r],ben=p=>(an?p.q.reduce((a,b)=>a+b,0):p.q[r])*p.mg,cav=p=>an?p.m2.ca:p.m2.v[r];
+ const top=(f)=>P.filter(p=>f(p)>0).sort((a,b)=>f(b)-f(a)).slice(0,20);
+ const rows=(a,f,fm,tag)=>a.length?`<ol>${a.map((p,i)=>`<li class="${tag&&tag(p,i)?"m80":""}"><i class="rk">${i+1}</i><div class="rb"><span class="nm">${esc(p.n)}</span><span class="bar"><s style="width:${Math.max(3,100*f(p)/f(a[0]))}%"></s></span></div><b class="vl">${fm(p,i)}</b></li>`).join("")}</ol>`:`<p class="rc-e" style="padding:6px 0 0">Aucune donnée pour cette période.</p>`;
+ const a1=top(qv),a2=top(ben),tot80=P.reduce((s,p)=>s+Math.max(0,cav(p)),0),srt=P.filter(p=>cav(p)>0).sort((a,b)=>cav(b)-cav(a));let cum=0,n80=0;srt.forEach((p,i)=>{cum+=cav(p);p._c=tot80?cum/tot80:0;if(!n80&&p._c>=.8)n80=i+1});
+ const a3=srt.slice(0,20),ctl=`<div class="rc-ctl ${an?"dis":""}"><select onchange="rcSet('ref',+this.value)" ${an?"disabled":""}>${MOIS.map((m,i)=>`<option value="${i}" ${i==r?"selected":""}>${m}</option>`).join("")}</select><div class="rc-seg"><button class="${an?"":"on"}" onclick="rcSet('per','mois')">Mois</button><button class="${an?"on":""}" onclick="rcSet('per','an')">De l'année</button></div></div>`;
+ return ctl+`<section class="rc-s"><h3>TOP 20 DES PRODUITS LES MIEUX VENDUS</h3><div class="sb">${lib}</div>${rows(a1,qv,p=>`${fn(qv(p))}<small>${esc(p.u)}</small>`)}</section>`
+ +`<section class="rc-s"><h3>TOP 20 DES PRODUITS LES PLUS RENTABLES</h3><div class="sb">${lib} · quantités vendues × marge unitaire</div>${rows(a2,ben,p=>fc(ben(p)))}</section>`
+ +`<section class="rc-s"><h3>TOP 20 DES PRODUITS CONTRIBUANT À 80 % DU CHIFFRE D'AFFAIRES CUMULÉ</h3><div class="sb">${lib}${n80?` · ${n80} produit(s) (${pc1(n80/Math.max(1,P.length),0)} des références) = 80 % du CA`:""}</div>${rows(a3,cav,p=>`${fc(cav(p))}<small>${pc1(cav(p)/tot80)} · cumul ${pc1(p._c,0)}</small>`,(p,i)=>i+1==n80)}
+ <button class="rc-btn ${RC.par?"on":""}" onclick="rcSet('par',${!RC.par})">${RC.par?"Masquer":"Afficher"} le graphique 80/20</button>${RC.par?`<div class="rc-ch">${pareto(srt,cav,tot80,n80)}</div>`:""}</section>`}
+function pareto(a,f,tot,n80){if(!a.length||!tot)return`<p class="rc-e" style="padding:8px">Aucun chiffre d'affaires enregistré pour cette période.</p>`;
+ const W=360,H=250,ml=36,mr=30,mt=36,mb=22,w=W-ml-mr,h=H-mt-mb,n=a.length,bw=w/n,mx=f(a[0]),X=i=>ml+bw*(i+.5),Y=v=>mt+h-h*v/mx,Yp=v=>mt+h-h*v;
+ const bars=a.map((p,i)=>`<rect x="${(ml+bw*i+bw*.12).toFixed(1)}" y="${Y(f(p)).toFixed(1)}" width="${(bw*.76).toFixed(1)}" height="${(h*f(p)/mx).toFixed(1)}" fill="${i<n80?"#3AFEEB":"#3A6073"}"/>`).join("");
+ const line=a.map((p,i)=>`${i?"L":"M"}${X(i).toFixed(1)} ${Yp(p._c).toFixed(1)}`).join(" "),xm=ml+bw*n80;
+ const gy=[0,.25,.5,.75,1].map(t=>`<line x1="${ml}" x2="${W-mr}" y1="${Yp(t).toFixed(1)}" y2="${Yp(t).toFixed(1)}" stroke="#1f4a54" stroke-width=".5"/><text x="${ml-3}" y="${(Yp(t)+3).toFixed(1)}" text-anchor="end">${kk(mx*t)}</text><text x="${W-mr+3}" y="${(Yp(t)+3).toFixed(1)}">${Math.round(t*100)}%</text>`).join("");
+ return`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Diagramme de Pareto du chiffre d'affaires"><text class="tt" x="${W/2}" y="13" text-anchor="middle">Environ 20% des Produits génèrent</text><text class="tt" x="${W/2}" y="26" text-anchor="middle">80% du Chiffre d'Affaires total</text>${gy}${bars}
+ <line x1="${ml}" x2="${W-mr}" y1="${Yp(.8)}" y2="${Yp(.8)}" stroke="#ffe066" stroke-width="1" stroke-dasharray="4 3"/><path d="${line}" fill="none" stroke="#ff4d6d" stroke-width="1.6"/>${n80?`<line x1="${xm}" x2="${xm}" y1="${mt}" y2="${mt+h}" stroke="#ffe066" stroke-width=".8" stroke-dasharray="2 2"/><text x="${Math.min(xm+3,W-mr-70)}" y="${mt+10}" style="fill:#ffe066;font-weight:700">${n80} produits = 80 %</text>`:""}</svg>
+ <div class="lgd"><span><i style="background:#3AFEEB"></i>CA des produits (F CFA)</span><span><i style="background:#ff4d6d"></i>% cumulé</span><span><i style="background:#ffe066"></i>Seuil 80 %</span></div>`}
+/* --- RÉCAP TRÉSORERIE : graphique CDT --- */
+function rcTre(){const T=RC.T,M=T.m;if(!M.length)return`<p class="rc-e">Aucune donnée de trésorerie.</p>`;const tt=T.tot||{ca:0,rec:0,ver:0,dep:0,tx:0},fin=T.fin&&T.fin.tx?T.fin.tx:tt.tx;
+ const k=(l,v,c)=>`<div style="--c:${c}"><small>${l}</small><b style="font-size:15px">${v}</b></div>`;
+ return`<div class="rc-k">${k("Chiffre d'affaires",fc(tt.ca),"#5aa9ff")}${k("Montant total versé",fc(tt.ver),"#4be38a")}${k("Dépenses",fc(tt.dep),"#ff6b6b")}</div>
+ <section class="rc-s"><h3>ÉVOLUTION MENSUELLE SUR L'ANNÉE 2027</h3><div class="sb">Montants (F CFA) · taux de recouvrement NPSP · touchez un mois</div><div class="rc-ch">${cdt(M)}</div><div class="lgd"><span><i style="background:#5AB0FF"></i>Chiffre d'affaires</span><span><i style="background:#ff6b6b"></i>Dépenses</span><span><i style="background:#3AFEEB"></i>Taux de recouvrement NPSP</span></div><div id="rc-tip">Taux de recouvrement NPSP en fin d'année : <b>${pc1(fin,0)}</b></div></section>
+ <section class="rc-s"><h3>DÉTAIL PAR MOIS</h3><div class="sc" style="margin-top:8px"><table class="rc-t"><tr><th>Mois</th><th>CA</th><th>Recettes</th><th>Versé</th><th>Dépenses</th><th>Taux</th></tr>${M.map(o=>`<tr><td>${o.l}</td><td>${fn(o.ca)}</td><td>${fn(o.rec)}</td><td>${fn(o.ver)}</td><td>${fn(o.dep)}</td><td>${pc1(o.tx,0)}</td></tr>`).join("")}${T.tot?`<tr class="tot"><td>Total</td><td>${fn(tt.ca)}</td><td>${fn(tt.rec)}</td><td>${fn(tt.ver)}</td><td>${fn(tt.dep)}</td><td>${pc1(tt.tx,0)}</td></tr>`:""}</table></div></section>`}
+function cdt(M){const W=360,H=250,ml=40,mr=32,mt=14,mb=26,w=W-ml-mr,h=H-mt-mb,n=M.length,bw=w/n,mx=Math.max(1,...M.map(o=>Math.max(o.ca,o.dep))),mt2=Math.max(1,...M.map(o=>o.tx)),X=i=>ml+bw*(i+.5),Y=v=>mt+h-h*v/mx,Yt=v=>mt+h-h*v/mt2;
+ const bars=M.map((o,i)=>`<rect id="cb${i}" x="${(ml+bw*i+bw*.18).toFixed(1)}" y="${Y(o.ca).toFixed(1)}" width="${(bw*.64).toFixed(1)}" height="${(h*o.ca/mx).toFixed(1)}" rx="2" fill="#5AB0FF"/>`).join("");
+ const ln=(f,c,d)=>`<path d="${M.map((o,i)=>`${i?"L":"M"}${X(i).toFixed(1)} ${f(o).toFixed(1)}`).join(" ")}" fill="none" stroke="${c}" stroke-width="1.8" ${d?`stroke-dasharray="${d}"`:""}/>`+M.map((o,i)=>`<circle cx="${X(i).toFixed(1)}" cy="${f(o).toFixed(1)}" r="2.2" fill="${c}"/>`).join("");
+ const gy=[0,.25,.5,.75,1].map(t=>`<line x1="${ml}" x2="${W-mr}" y1="${(mt+h-h*t).toFixed(1)}" y2="${(mt+h-h*t).toFixed(1)}" stroke="#1f4a54" stroke-width=".5"/><text x="${ml-3}" y="${(mt+h-h*t+3).toFixed(1)}" text-anchor="end">${kk(mx*t)}</text><text x="${W-mr+3}" y="${(mt+h-h*t+3).toFixed(1)}">${Math.round(mt2*t*100)}%</text>`).join("");
+ const xl=M.map((o,i)=>`<text x="${X(i).toFixed(1)}" y="${H-9}" text-anchor="middle">${o.l.slice(0,3)}</text>`).join(""),hit=M.map((o,i)=>`<rect x="${(ml+bw*i).toFixed(1)}" y="${mt}" width="${bw.toFixed(1)}" height="${h}" fill="transparent" onclick="cdtTip(${i})"/>`).join("");
+ return`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Évolution mensuelle : chiffre d'affaires, dépenses et taux de recouvrement">${gy}${bars}${ln(o=>Y(o.dep),"#ff6b6b")}${ln(o=>Yt(o.tx),"#3AFEEB","4 2")}${xl}${hit}</svg>`}
+function cdtTip(i){const o=RC.T.m[i];document.querySelectorAll("[id^=cb]").forEach((e,j)=>e.setAttribute("fill",j==i?"#9fd2ff":"#5AB0FF"));
+ $("rc-tip").innerHTML=`<b>${o.l}</b><br>CA : ${fc(o.ca)} · Recettes : ${fc(o.rec)}<br>Versé : ${fc(o.ver)} · Dépenses : <span class="dn">${fc(o.dep)}</span><br>Taux de recouvrement NPSP : <b>${pc1(o.tx,0)}</b>`}
+/* --- PRODUITS (DCI) --- */
+function rcProd(){const P=RC.P,cnt=k=>k=="all"?P.length:k=="rup"?P.filter(p=>p.rup).length:P.filter(p=>p.cat==k&&!p.rup).length;
+ const F=[["all","Tous"],["urg","Urgence"],["sug","Suggestions"],["ok","Suffisant"],["rup","Rupture"],["sv","À surveiller"]];
+ return`<input id="rcq" type="search" placeholder="Rechercher un produit…" value="${esc(RC.q)}" oninput="rcSet('q',this.value)" style="width:100%;margin-bottom:8px"><div class="rc-f">${F.map(([k,l])=>`<button class="${RC.flt==k?"on":""}" onclick="rcSet('flt','${k}')">${l} (${cnt(k)})</button>`).join("")}</div><div id="rc-pl"></div>`}
+function rcList(){const el=$("rc-pl");if(!el)return;const q=nz(RC.q);
+ document.querySelectorAll(".rc-f button").forEach((b,i)=>b.classList.toggle("on",["all","urg","sug","ok","rup","sv"][i]==RC.flt));
+ const L=RC.P.filter(p=>(RC.flt=="all"||(RC.flt=="rup"?p.rup:(p.cat==RC.flt&&!p.rup)))&&(!q||nz(p.n).includes(q)));
+ el.innerHTML=L.length?L.map(p=>{const c=p.rup?"rup":p.cat,va=p.m2.va,cl=va.startsWith("▲")?"up":va.startsWith("▼")?"dn":"";
+  return`<details class="pc ${c}"><summary><span class="pn">${esc(p.n)}</span><span class="pill">${CAT[c][0]}</span><span class="ps">Stock : ${dv(p.sd,v=>fn(v))} ${esc(p.u)} · ${dv(p.ms,v=>fn(v,1))} mois</span></summary>
+  <div class="pg"><div><small>Unité de comptage</small><b>${esc(p.u)||"—"}</b></div><div><small>Conso. mensuelle moyenne</small><b>${dv(p.cmm,v=>fn(v,1))}</b></div><div><small>Stock dispo & utilisable</small><b>${dv(p.sd,v=>fn(v))}</b></div><div><small>Mois de stock disponible</small><b>${dv(p.ms,v=>fn(v,1))}</b></div>
+  <div class="w"><small>Observations</small><b>${esc(p.obs)||"—"}</b></div><div><small>Prix d'achat unitaire</small><b>${fc(p.m2.pa)}</b></div><div><small>Prix de vente unitaire</small><b>${fc(p.m2.pv)}</b></div><div><small>Marge unitaire</small><b>${fc(p.mg)}</b></div><div><small>Variation des ventes</small><b class="${cl}">${esc(va)||"—"}</b></div><div class="w"><small>% CA</small><b>${pc1(p.pca,2)}</b></div></div></details>`}).join(""):`<p class="rc-e">Aucun produit ne correspond.</p>`}
+
 const FX=(()=>{let cv,cx,P=[],W=0,H=0,raf=0,em=false,kind="",last=0,T=0,acc=0,minEnd=0,id=0,mt=0,box=null,art=null,fade=0;
  const red=matchMedia("(prefers-reduced-motion: reduce)").matches,MAX=red?28:96,RATE=red?6:14,rnd=(a,b)=>a+Math.random()*(b-a),pick=a=>a[Math.random()*a.length|0];
  const MOL=["Amoxicilline","Métronidazole","Paracétamol","Ciprofloxacine","Ibuprofène","Albendazole","Artésunate","Diclofénac","Oméprazole","Ceftriaxone","Gentamicine","Fluconazole","Salbutamol","Metformine","Amlodipine","Ampicilline","Diazépam","Tramadol","Cotrimoxazole","Furosémide","Dexaméthasone","Doxycycline","Artéméther","Lumefantrine","Ranitidine","Prednisolone","Captopril","Phénobarbital","Ceftazidime","Vitamine C"];
