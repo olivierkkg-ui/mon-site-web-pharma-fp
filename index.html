@@ -2,7 +2,7 @@
 <html lang="fr"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0b1f24"><title>Gestion Pharmacie - EPHD Sandégué 2027</title>
-<link rel="manifest" href="manifest.json"><link rel="icon" href="favicon.png"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.json"><link rel="icon" type="image/png" href="favicon.png"><link rel="icon" type="image/png" sizes="192x192" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Pharmacie EPHD">
 <style>
 :root{--bg:#0b1f24;--card:#12323a;--tx:#e8fbff;--mut:#8fb5bd;--ac:#3AFEEB;--ko:#ff6b6b;--ok:#4be38a;--or:#ffa94d}
@@ -229,7 +229,7 @@ details.rc-c .rc-in li.m80{box-shadow:inset 0 -2px 0 #ffd77a}
 
 /* ===== v8 ===== */
 /* Actualiser : atténué, lumineux au survol / actif */
-.rf{filter:brightness(.55) saturate(.8);box-shadow:0 0 6px rgba(58,254,235,.2),inset 0 0 0 2px rgba(255,255,255,.18);transition:filter .25s,box-shadow .25s,transform .15s}
+.rf{filter:brightness(.72) saturate(.85);box-shadow:0 0 6px rgba(58,254,235,.2),inset 0 0 0 2px rgba(255,255,255,.18);transition:filter .25s,box-shadow .25s,transform .15s}
 .rf:hover,.rf:focus-visible,.rf:active,.rf.spin{filter:brightness(1.12) saturate(1.1);box-shadow:0 0 22px rgba(58,254,235,.75),inset 0 0 0 2px rgba(255,255,255,.4)}
 /* Navigation : animation au clic */
 nav button{position:relative;overflow:hidden}nav button i{display:inline-block;transform-origin:50% 85%}
@@ -299,11 +299,96 @@ details.rc-c{border:2px solid var(--c,#3AFEEB);border-left-width:4px}
 .lvbox{width:100%;max-width:420px;background:var(--card);border:2px solid var(--ac);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:6px;max-height:92vh;overflow:auto}
 .lvbox h3{margin:0 0 4px;color:var(--ac);font-size:15px}.lvbox label{font-size:11.5px;color:#9fe9ef;font-weight:700}
 .lvbox select,.lvbox input{width:100%;border:2px solid #2f9aa6;background:#041519;font-weight:700}.lvbox .row button{flex:1}
+
+/* ===== v9 ===== */
+.top{gap:10px}
+.lgw{position:relative;flex:0 0 auto;width:66px;height:66px;border-radius:21px;overflow:hidden;display:grid;place-items:center;isolation:isolate;background:rgba(58,254,235,.2)}
+.lgw::before{content:"";position:absolute;inset:-70%;z-index:-1;background:conic-gradient(from 0deg,rgba(58,254,235,0) 0 45%,rgba(58,254,235,.95) 72%,#fff 86%,rgba(58,254,235,0) 100%);animation:lgspin 2.6s linear infinite}
+.lgw::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 8px 1px rgba(58,254,235,.6);animation:lgtw 1.4s ease-in-out infinite;pointer-events:none}
+.lgw .lg{display:block;width:60px;height:60px;box-shadow:none;border-radius:16px}
+@keyframes lgspin{to{transform:rotate(360deg)}}
+@keyframes lgtw{0%,100%{opacity:.35}25%{opacity:1}50%{opacity:.5}75%{opacity:.9}}
+nav button i{display:inline-grid;place-items:center;width:32px;height:32px;position:relative;border-radius:50%}
+nav button.on i::before{content:"";position:absolute;inset:-2px;border-radius:50%;padding:2px;background:conic-gradient(from 0deg,rgba(58,254,235,0) 0 40%,rgba(58,254,235,.9) 70%,#fff 86%,rgba(58,254,235,0) 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:ringspin 2.4s linear infinite,ringtw 1.3s ease-in-out infinite}
+nav button.on i::after{content:"";position:absolute;inset:-4px;border-radius:50%;background:radial-gradient(circle,transparent 62%,rgba(58,254,235,.35) 70%,transparent 78%);animation:ringtw 1.3s ease-in-out infinite reverse}
+@keyframes ringspin{to{transform:rotate(360deg)}}
+@keyframes ringtw{0%,100%{opacity:.55}30%{opacity:1}55%{opacity:.7}80%{opacity:.95}}
+@media (prefers-reduced-motion:reduce){.lgw::before,.lgw::after,nav button.on i::before,nav button.on i::after{animation:none}}
+/* liste déroulante soignée */
+#mois{display:none!important}
+.dd{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;padding:10px 12px;font-weight:700;background:linear-gradient(180deg,#14404a,#0e2a31);border:1.5px solid #2f9aa6;border-radius:12px;color:var(--tx);box-shadow:0 2px 8px rgba(0,0,0,.35)}
+#moisb{flex:0 0 auto;min-width:124px}
+.dd em{font-style:normal;color:var(--ac);transition:transform .2s;font-size:12px}
+.dd.open{border-color:var(--ac);box-shadow:0 0 0 3px rgba(58,254,235,.22)}.dd.open em{transform:rotate(180deg)}
+.dd:disabled{opacity:.45}
+.rc-ctl .dd{flex:0 0 auto;min-width:122px;padding:8px 10px}
+#ddp{position:fixed;z-index:80;background:#0e2a31;border:1.5px solid var(--ac);border-radius:14px;padding:8px;box-shadow:0 14px 34px rgba(0,0,0,.6),0 0 0 1px rgba(58,254,235,.15);animation:ddin .16s ease-out;overflow:auto}
+#ddp .g{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+#ddp .g.l1{grid-template-columns:1fr}
+#ddp button{padding:9px 4px;font-size:12px;font-weight:700;border-radius:10px;background:#12323a;border:1px solid #1e4650;color:var(--tx);white-space:nowrap}
+#ddp button.on{background:linear-gradient(135deg,#3AFEEB,#4be38a);color:#04282b;border-color:transparent}
+#ddp button.w{grid-column:1/-1}
+@keyframes ddin{from{opacity:0;transform:translateY(-6px) scale(.97)}}
+/* zones de saisie plus marquées */
+.f>div{background:rgba(3,20,25,.55);border:1px solid #1e5a66;border-radius:12px;padding:7px 7px 8px}
+.f label{display:block;margin-bottom:4px;letter-spacing:.2px}
+.f input,.nb textarea,input[type=search],.lvbox input,.lvbox select{border:2px solid #3fc3d1;background:#020f12;color:#fff;font-weight:700;border-radius:10px;box-shadow:inset 0 3px 8px rgba(0,0,0,.8),0 0 0 1px rgba(58,254,235,.12)}
+.f input:focus,.nb textarea:focus,input[type=search]:focus,.lvbox input:focus{outline:0;border-color:#3AFEEB;box-shadow:inset 0 3px 8px rgba(0,0,0,.8),0 0 0 3px rgba(58,254,235,.35)}
+.bt td input{border:2px solid #3fc3d1!important;background:#020f12!important}
+.bt td input:focus{border-color:#3AFEEB!important}
+/* barres de défilement horizontales moins lumineuses */
+.hsb i{background:linear-gradient(90deg,#238f86,#2f8f5c);box-shadow:0 0 4px rgba(58,254,235,.25);opacity:.75}
+.hsb::before{background:rgba(58,254,235,.12)}
+/* Bilan */
+.bt th:first-child,.bt td.lb{min-width:0!important;width:88px;max-width:96px;padding:8px 5px!important;font-size:10.5px!important;letter-spacing:.1px}
+.bt th:last-child,.bt td.tt{min-width:0!important;width:78px;padding:8px 5px!important;font-size:12.5px!important;letter-spacing:0}
+.bt td.lb{border-right:2px solid var(--lc,#f2c14e)!important}
+.bt th:first-child{border-right:2px solid #f2c14e!important}
+.bt td.tt,.bt tr.r1 td.tt,.bt tr.r2 td.tt,.bt tr.r3 td.tt{border-left:2px solid var(--lc,#f2c14e)!important}
+.bt th:last-child{border-left:2px solid #f2c14e!important}
+.bt th:not(:first-child):not(:last-child),.bt td:not(.lb):not(.tt){border-right:1px solid rgba(232,251,255,.42)}
+.bt th:not(:first-child):nth-last-child(2),.bt td:not(.lb):nth-last-child(2){border-right:0}
+/* Recouvrement */
+.sv tr:not(.h)>:last-child{border-left:2px solid var(--lc,#f2c14e)!important}
+.sv tr.h>:last-child{border-left:2px solid #f2c14e!important}
+.sv tr>:not(:first-child):not(:last-child){border-right:1px solid rgba(232,251,255,.42)}
+.sv tr>:not(:first-child):nth-last-child(2){border-right:0}
+.sv tr.v>:nth-child(2),.sv tr.s>:nth-child(2),.sv tr.e>:nth-child(2){background:#071216!important;color:#4a6a72}
+/* Récap : livraisons */
+details.rc-c .lv li{gap:6px}
+.lv li>div{min-width:0;flex:1}
+.lv li small{white-space:nowrap;font-size:clamp(9px,2.75vw,11px);letter-spacing:-.15px}
+.lv li .q{font-size:clamp(11px,3.2vw,12.5px)}
+.rc-s.lvm{padding:10px 6px}.rc-s.lvm .sb{display:flex;justify-content:space-between;align-items:center;gap:8px}
+details.rc-c.nol{border-style:dashed;background:linear-gradient(135deg,rgba(255,122,156,.10),var(--card) 60%)}
+details.rc-c.nol summary b{background:transparent;color:#ffb8cb;border:1px solid #ff7a9c}
+.mb{display:inline-block;width:46px;height:7px;border-radius:999px;background:#0b2a31;overflow:hidden;vertical-align:middle;margin-right:8px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+.mb s{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#3AFEEB,#4be38a)}
+details.rc-c[open] .mb{display:none}details.rc-c.nol .mb s{background:#ff7a9c}
+.rc-ed{flex:0 0 auto;width:36px;height:30px;padding:0;border-radius:10px;font-size:17px;line-height:1;background:#0e2a31;border:1px solid var(--ac)}
+.rc-ed:disabled{opacity:.35;filter:grayscale(1)}
+#lvf .dl{background:linear-gradient(135deg,#43202a,#2a1519);color:#ffd0d0;border:1px solid #8a4048;font-weight:700}
+/* Récap : trésorerie */
+.rc-d>summary{position:static!important;top:auto!important;z-index:auto!important}
+.rc-fix .pgb{position:static;margin:4px 0 6px;box-shadow:0 0 12px rgba(58,254,235,.2)}
+.pgb .tp span{font-size:11.5px;line-height:1.2}
+.rc-d .sc{overflow-y:hidden}
+.rc-t{border-collapse:separate;border-spacing:0}
+.rc-t th,.rc-t td{border:0;border-bottom:1px solid #1e4650;border-right:1px solid rgba(232,251,255,.22)}
+.rc-t td:first-child,.rc-t th:first-child{position:sticky;left:0;z-index:2;border-right:2px solid #5AB0FF;box-shadow:3px 0 6px -2px rgba(0,0,0,.55)}
+.rc-t th:first-child{background:#0f4d3c}
+.lgd{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;font-size:11px;white-space:normal}
+.lgd i.g2{background:#C00000;box-shadow:none}
+.lgd i.g3{background:linear-gradient(#2f8a3b,#0f4318)}
+.lgd i.g4{width:16px;height:0;border-top:2px dashed #FFE066;border-radius:0;vertical-align:3px;background:none}
+#rc-tip .cy{color:#ffd77a;font-weight:800}#rc-tip .ct{color:#3AFEEB;font-weight:800}
+/* Produits */
+details.pc{border:2px solid var(--c,#3AFEEB);border-left-width:4px}
 </style></head><body>
-<div id="login"><img src="icon-512.png" alt=""><h1>Gestion Pharmacie - EPHD Sandégué 2027</h1><p>Connectez-vous avec votre compte Microsoft pour accéder au classeur.</p><button class="p" onclick="signIn()">Se connecter</button><p id="err" style="color:var(--ko)"></p></div>
+<div id="login"><img src="icon-512.png" alt="" onerror="this.onerror=null;this.src='logo_pharma_gestion_512.png'"><h1>Gestion Pharmacie - EPHD Sandégué 2027</h1><p>Connectez-vous avec votre compte Microsoft pour accéder au classeur.</p><button class="p" onclick="signIn()">Se connecter</button><p id="err" style="color:var(--ko)"></p></div>
 <div id="app" class="hide">
-<header><div class="top"><img class="lg" src="icon-192.png" alt=""><h1>Gestion Pharmacie - EPHD Sandégué 2027</h1><button id="rf" class="rf" onclick="load()" aria-label="Actualiser"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg></button></div>
-<div class="srow"><div id="st"></div><button class="out" onclick="signOut()">Se déconnecter</button></div><div id="bar"><i></i></div><div id="fin" class="hide">✔ INVENTAIRE TERMINÉ</div><div class="row"><select id="mois" onchange="load()"></select><select id="mode" onchange="render()"><option value="pos">📍 Ordre magasin</option><option value="todo">📝 À inventorier</option><option value="vente">🏆 Top CA</option></select></div>
+<header><div class="top"><span class="lgw"><img class="lg" src="icon-192.png" alt="" onerror="this.onerror=null;this.src='logo_pharma_gestion_192.png'"></span><h1>Gestion Pharmacie - EPHD Sandégué 2027</h1><button id="rf" class="rf" onclick="load()" aria-label="Actualiser"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg></button></div>
+<div class="srow"><div id="st"></div><button class="out" onclick="signOut()">Se déconnecter</button></div><div id="bar"><i></i></div><div id="fin" class="hide">✔ INVENTAIRE TERMINÉ</div><div class="row"><select id="mois" onchange="load()" hidden></select><button id="moisb" type="button" class="dd" onclick="ddOpen(this)"></button><select id="mode" onchange="render()"><option value="pos">📍 Ordre magasin</option><option value="todo">📝 À inventorier</option><option value="vente">🏆 Top CA</option></select></div>
 <div id="sf"><div class="row" style="margin-top:8px"><input id="q" type="search" placeholder="Rechercher un produit…" oninput="render()"></div></div>
 </header>
 <main id="main"></main>
@@ -339,9 +424,9 @@ async function g(path,opt={},retry=true){const sid=await sess(),h={Authorization
 const col=n=>{let s="";n++;while(n){s=String.fromCharCode(65+(n-1)%26)+s;n=Math.floor((n-1)/26)}return s};
 const parse=a=>{const m=a.split("!")[1].replace(/\$/g,"").match(/([A-Z]+)(\d+):/);return{row:+m[2],col:[...m[1]].reduce((x,c)=>x*26+c.charCodeAt(0)-64,0)-1}};
 const put=(addr,sheet,v)=>g(`/worksheets('${enc(sheet)}')/range(address='${addr}')`,{method:"PATCH",body:J({values:[[v]]})});
-function tab(t){cur=t;{const b=$("t-"+t),i=b.querySelector("i");i.classList.remove("pop");b.classList.remove("rg");void b.offsetWidth;i.classList.add("pop");b.classList.add("rg")}for(const k of["stock","bilan","rec","recap"])$("t-"+k).classList.toggle("on",k==t);
+function tab(t){ddClose();if(t=="recap")rcFold(RC.sec);cur=t;{const b=$("t-"+t),i=b.querySelector("i");i.classList.remove("pop");b.classList.remove("rg");void b.offsetWidth;i.classList.add("pop");b.classList.add("rg")}for(const k of["stock","bilan","rec","recap"])$("t-"+k).classList.toggle("on",k==t);
  const s=t=="stock";$("act").classList.toggle("hide",t=="rec"||t=="recap");$("st").dataset.s="";$("b-stock").classList.toggle("hide",!s);$("b-bilan").classList.toggle("hide",t!="bilan");
- for(const i of["sf","mode","bar"])$(i).classList.toggle("hide",!s);$("mois").classList.toggle("hide",t=="rec"||t=="recap");$("fin").classList.add("hide");document.body.dataset.bf="";$("main").style.cssText="";load()}
+ for(const i of["sf","mode","bar"])$(i).classList.toggle("hide",!s);$("mois").classList.toggle("hide",t=="rec"||t=="recap");$("moisb").classList.toggle("hide",t=="rec"||t=="recap");$("fin").classList.add("hide");document.body.dataset.bf="";$("main").style.cssText="";load()}
 const saveCache=()=>localStorage.setItem("op_notes",J(CACHE));
 /* Notes : base = feuille NOTES_EXCEL (exportée par la macro à chaque enregistrement du classeur) ;
    par-dessus : notes envoyées par l'appli et pas encore converties/exportées par Excel (NOTES_APP + cache local). */
@@ -425,6 +510,7 @@ const pool=async(fns,n)=>{const out=[];let i=0;await Promise.all(Array.from({len
 async function recou(){const sh=enc("SOLVABILITÉ"),d=await g(`/worksheets('${sh}')/range(address='C2:R9')`),T=d.text,V=d.values,
  n=x=>typeof x==="number"?x:(parseFloat(x)||0),fm=v=>grp(v)+"\u00a0F\u00a0CFA",
  A=await pool(MOIS.map(m=>()=>g(`/tables('LIVRAISONS_RECOU_${enc(m)}')/columns('${enc("DÉBIT")}')/totalRowRange`).then(x=>n(x.values[0][0]))),4);
+ for(let i=2;i<=5;i++)for(let c=1;c<V[i].length;c++){const x=V[i][c];T[i][c]=(c==1&&i>2)?"":(typeof x==="number"?fm(x):(x==null||x===""?"":String(x)))}
  let pc=typeof V[7][14]==="number"?V[7][14]:0;
  if(A.every(x=>x!==null)){const rep=n(V[2][1]);let s=rep,fac=0,R5=0;
   for(let j=0;j<12;j++){const c=2+j,vs=n(V[3][c]);fac+=A[j];s=s+A[j]-vs;R5+=vs;T[2][c]=fm(A[j]);T[4][c]=fm(s);T[5][c]=fm(fac)}
@@ -441,7 +527,7 @@ async function recou(){const sh=enc("SOLVABILITÉ"),d=await g(`/worksheets('${sh
  <text x="90" y="106" text-anchor="middle" fill="#6ff0a8" font-size="6.1" font-weight="700" letter-spacing=".35">TAUX DE RECOUVREMENT NPSP</text>
  <text x="90" y="116" text-anchor="middle" fill="#6ff0a8" font-size="6.1" font-weight="700" letter-spacing=".35">${yr}</text></svg>
  <h2 style="font-size:15px">${T[0][0]}</h2><div class="sc"><table class="sv">${T.slice(1,6).map((r,i)=>`<tr class="${cl[i]}">${r.map((c,j)=>i==0?`<th>${c}</th>`:`<td>${j==0&&/^\s*Factures échues/i.test(c)?"FACTURES ÉCHUES **":j>0?gc(c):c}</td>`).join("")}</tr>`).join("")}</table></div><p class="fn">${fixFn(T[6][0]||"")}</p><p class="fn">** Factures échues depuis le 1er janvier de l'année en cours.</p>`;initHsb();eqRows();fitRec();countUp($("pcv"),Math.round(pc*100))}
-const gc=c=>{const s=String(c==null?"":c),m=s.match(/^\s*(-?)([\d\s\u00a0\u202f]+)(?:[.,]\d+)?\s*(F\s*CFA)?\s*$/);if(!m)return s;const d=m[2].replace(/\D/g,"");return d?(m[1]||"")+grp(d)+(m[3]?"\u00a0F\u00a0CFA":""):s};
+const gc=c=>{const s=String(c==null?"":c).replace(/(\d),(?=\d{3}(?!\d))/g,"$1"),m=s.match(/^\s*(-?)([\d\s\u00a0\u202f]+)(?:[.,]\d+)?\s*(F\s*CFA)?\s*$/);if(!m)return s;const d=m[2].replace(/\D/g,"");return d?(m[1]||"")+grp(d)+(m[3]?"\u00a0F\u00a0CFA":""):s};
 /* Recouvrement : tout le contenu tient sur la hauteur de l'écran (pas de défilement vertical) ; seul le tableau défile horizontalement */
 const fixFn=t=>{t=String(t).trim().replace(/^\*\s*(?!\*)/,"* ");return/[.!?]$/.test(t)?t:t?t+".":t};
 function fitRec(){const m=$("main"),sv=document.querySelector(".ring");if(!sv||cur!=="rec")return;
@@ -472,54 +558,82 @@ const CAT={urg:["URGENT","À COMMANDER EN URGENCE"],sug:["SUGGÉRÉ","SUGGESTION
 const EMO={urg:"🚨",sug:"💡",ok:"✅",rup:"⛔",sv:"👁️"};
 const cap=m=>m.charAt(0)+m.slice(1).toLowerCase();
 /* Les fiches produits sont rapprochées du classeur par le NOM normalisé (sans accents, espaces ni casse) : plus de décalage si un produit est ajouté, retiré ou renommé dans Excel. */
-function prepRC(){const A=RC.d.a,B=RC.d.b,ca=tcol(A),cb=tcol(B),G=(r,c,k)=>r[c[nz(k)]],M2={},PM=RC.d.pm||{};
- B.r.forEach(r=>{const n=String(G(r,cb,"PRODUITS (DCI)")||"").trim();if(n)M2[nz(n)]={u:G(r,cb,"UNITE DE COMPTAGE")||"",pa:nv(G(r,cb,"PRIX D'ACHAT UNITAIRE")),pv:nv(G(r,cb,"PRIX DE VENTE UNITAIRE")),mg:nv(G(r,cb,"MARGE UNITAIRE")),va:String(G(r,cb,"VARIATION DES VENTES")||""),v:MOIS.map(m=>nv(G(r,cb,m))),ca:nv(G(r,cb,"CHIFFRE D'AFFAIRES")),pca:nv(G(r,cb,"% CA"))}});
+function prepRC(){const A=RC.d.a,B=RC.d.b,ca=tcol(A),cb=tcol(B),G=(r,c,k)=>r[c[nz(k)]],M2={},PM=RC.d.pm||{},mi=new Date().getMonth(),isN=x=>typeof x==="number",isE=x=>typeof x==="string"&&/^#/.test(x),
+ mk=t=>{if(!t)return null;const c=tcol(t),m=new Map();t.r.forEach(r=>{const n=nz(r[c.PRODUITSDCI]);if(n&&!m.has(n))m.set(n,r)});return{c,m}},SC=mk(RC.d.sc),SP=mk(RC.d.sp),hasS=!!(SC||SP),
+ /* Les formules RECAP / RECAP2 d'Excel utilisent TEXT(TODAY();"mmmm") : Microsoft Graph (anglais) ne trouve alors aucun tableau STOCK_<MOIS>. Les valeurs sont donc recalculées ici, à partir des tableaux STOCK_<MOIS>, avec la même logique que les formules du classeur. */
+ sg=(S,n,k)=>{if(!S)return undefined;const r=S.m.get(nz(n));if(!r)return undefined;const v=r[S.c[nz(k)]];return v===undefined||v===null?"":v},
+ pick=(n,k)=>{let v=sg(SC,n,k);if(v===undefined)v=sg(SP,n,k);return v},
+ price=(n,k)=>{const v=pick(n,"PRIX UNITAIRE "+k);return v===undefined?null:(v===""?0:nv(v))},
+ unit=n=>{const v=pick(n,"UNITÉ DE COMPTAGE");return v===undefined||v===""||/🚫/.test(String(v))?"":String(v)};
+ const B2=[];let totCA=0;
+ B.r.forEach(r=>{const n=String(G(r,cb,"PRODUITS (DCI)")||"").trim();if(!n||/^total$/i.test(n))return;const raw=MOIS.map(m=>G(r,cb,m)),v=raw.map(x=>isN(x)?x:0),ca2=raw.reduce((t,x)=>t+(isN(x)?x:0),0);totCA+=ca2;B2.push({r,n,raw,v,ca2})});
+ B2.forEach(o=>{const{r,n,raw,v,ca2}=o;let pa,pv,mg,va,u;
+  if(hasS){pa=price(n,"ACHAT");pv=price(n,"VENTE");u=unit(n)}else{pa=nv(G(r,cb,"PRIX D'ACHAT UNITAIRE"));pv=nv(G(r,cb,"PRIX DE VENTE UNITAIRE"));u=String(G(r,cb,"UNITE DE COMPTAGE")||"")}
+  mg=(pa!=null&&pv!=null)?pv-pa:0;
+  const X=mi>=2?raw[mi-2]:null,Y=mi>=1?raw[mi-1]:null;
+  va=(isN(X)&&isN(Y))?(Y>X?"▲":Y<X?"▼":"▬")+(Y===X?" ":" "+grp(Math.abs(Y-X))+" F CFA"):"🚫";
+  M2[nz(n)]={u,pa,pv,mg,va,v,ca:ca2,pca:totCA?ca2/totCA:0}});
+ const KEYS=["REPORT_JUIL","REPORT_AOÛT","REPORT_SEPT","REPORT_OCT","REPORT_NOV","REPORT_DÉC",...MOIS],qn=x=>(typeof x==="number"?x:0);
  RC.P=[];A.r.forEach(r=>{const n=String(G(r,ca,"PRODUITS (DCI)")||"").trim();if(!n)return;
-  const o=String(G(r,ca,"OBSERVATIONS")||""),sd=G(r,ca,"STOCK DISPO & UTILISABLE"),m2=M2[nz(n)]||{u:"",pa:0,pv:0,mg:0,va:"",v:MOIS.map(()=>0),ca:0,pca:0};
-  const cat=/COMMANDER EN URGENCE/i.test(o)?"urg":/SUG/i.test(o)?"sug":/STOCK SUFFISANT/i.test(o)?"ok":"sv",rup=(sd===0||sd==="");
-  RC.P.push({n,u:G(r,ca,"UNITE DE COMPTAGE")||m2.u||"",mg:m2.mg,q:MOIS.map(m=>nv(G(r,ca,m))),tot:nv(G(r,ca,"TOTAL")),cmm:G(r,ca,"CONSOMMATION MENSUELLE MOYENNE"),sd,ms:G(r,ca,"MOIS DE STOCK DISPONIBLE"),obs:o,pcaA:m2.pca,pcaM:(nz(n) in PM)?PM[nz(n)]:null,cat,rup,m2})});
+  const m2=M2[nz(n)]||{u:"",pa:null,pv:null,mg:0,va:"",v:MOIS.map(()=>0),ca:0,pca:0},raw=KEYS.map(k=>G(r,ca,k)),
+   q=MOIS.map((m,i)=>qn(raw[6+i])),tot=q.reduce((t,x)=>t+x,0),win=raw.slice(mi,mi+6),cmm=win.some(isE)?0:(()=>{const a=win.filter(isN);return a.length?a.reduce((t,x)=>t+x,0)/a.length:0})();
+  let u=hasS?(unit(n)||m2.u):String(G(r,ca,"UNITE DE COMPTAGE")||m2.u||""),sd,ms,obs;
+  const up=nz(n)==="FERSIROP200ML"?3:1,mn=nz(n)==="FERSIROP200ML"?up+1:up+.25,mxs=mn+1;
+  if(hasS){const rc=SC&&SC.m.get(nz(n)),rp=SP&&SP.m.get(nz(n)),gv=(S,row,k)=>{const v=row[S.c[nz(k)]];return v===undefined||v===null?"":v};
+   let v9=rc?gv(SC,rc,"STOCK INVENTORIÉ"):"";const som=(rc?qn(gv(SC,rc,"STOCK INITIAL")):0)+(rc?qn(gv(SC,rc,"STOCK ENTRÉ")):0);
+   let vp;if(rp){const x=gv(SP,rp,"STOCK INVENTORIÉ");vp=x!==""?x:"🚫"}else vp="0";
+   sd=v9!==""?v9:(som!==0?som:vp);if(typeof sd==="string"&&sd!==""&&!isNaN(+sd))sd=+sd;
+   ms=isN(sd)&&cmm?sd/cmm:0;
+   const qac=Math.round((mxs+.25)*cmm-(isN(sd)?sd:0)),qs=(qac<0?"-":"")+grp(Math.abs(qac));
+   obs=cmm===0?"À SURVEILLER":(ms>up&&ms<=mxs?qs+" SUGGÉRÉE(S)":(ms<=up?qs+" À COMMANDER EN URGENCE":"STOCK SUFFISANT"))}
+  else{sd=G(r,ca,"STOCK DISPO & UTILISABLE");ms=G(r,ca,"MOIS DE STOCK DISPONIBLE");obs=String(G(r,ca,"OBSERVATIONS")||"")}
+  const cat=/COMMANDER EN URGENCE/i.test(obs)?"urg":/SUG/i.test(obs)?"sug":/STOCK SUFFISANT/i.test(obs)?"ok":"sv",rup=(sd===0||sd==="");
+  RC.P.push({n,u,mg:m2.mg,q,tot,cmm,sd,ms,obs,pcaA:m2.pca,pcaM:(nz(n) in PM)?PM[nz(n)]:null,cat,rup,m2})});
  const C=RC.d.c,cc=tcol(C),lab=r=>String(r[0]||"").trim(),T={m:[],tot:null,fin:null};
- C.r.forEach(r=>{const l=lab(r),o={l,ca:nv(r[cc.CHIFFREDAFFAIRES]!==undefined?r[cc.CHIFFREDAFFAIRES]:r[cc.CHIFFREDAFFAIRE]),rec:nv(r[cc.RECETTES]),ver:nv(r[cc.MONTANTTOTALVERSE]),dep:nv(r[cc.DEPENSES]),tx:nv(r[cc.TAUXDERECOUVREMENTNPSP]),vv:nv(r[cc.VERSEMENTNPSPVALIDE])};
+ C.r.forEach(r=>{const l=lab(r),o={l,ca:nv(r[cc.CHIFFREDAFFAIRES]!==undefined?r[cc.CHIFFREDAFFAIRES]:r[cc.CHIFFREDAFFAIRE]),rec:nv(r[cc.RECETTES]),ver:nv(r[cc.MONTANTTOTALVERSE]),dep:nv(r[cc.DEPENSES]),tx:nv(r[cc.TAUXDERECOUVREMENTNPSP]),tn:(typeof r[cc.TAUXDERECOUVREMENTNPSP]==="number"?r[cc.TAUXDERECOUVREMENTNPSP]:null),vv:nv(r[cc.VERSEMENTNPSPVALIDE])};
   if(MOIS.includes(l))T.m.push(o);else if(/^total/i.test(l))T.tot=o;else if(/^fin/i.test(l))T.fin=o});RC.T=T}
 /* Synchronisation : à l'ouverture de l'onglet, au retour sur l'appli (écouteur visibilitychange existant) et au changement de section si les données ont plus de 45 s. */
 async function recap(){const T=async n=>{const d=await g(`/tables('${enc(n)}')/range`);return{h:d.values[0].map(String),r:d.values.slice(1)}};
  const[a,b,c]=await Promise.all(["RECAP","RECAP2","RECAP_TRÉSORERIE"].map(T)),mi=new Date().getMonth(),pm={};
  RC.pmN=mi>0?cap(MOIS[mi-1]):cap("DÉCEMBRE")+" "+(new Date().getFullYear()-1);
  if(mi>0){try{const d=await g(`/tables('STOCK_${enc(MOIS[mi-1])}')/range`),h=d.values[0].map(nz),ip=h.indexOf("PRODUITSDCI"),ic=h.indexOf("%CA");if(ip>=0&&ic>=0)d.values.slice(1).forEach(r=>{const k=nz(r[ip]);if(k&&r[ic]!=="")pm[k]=nv(r[ic])})}catch(e){}}
- RC.d={a,b,c,pm};RC.t=Date.now();prepRC();try{const q=await solvPc();RC.pcs=q.pc;RC.yr=q.yr}catch(e){RC.pcs=null}
+ const sc=await T("STOCK_"+MOIS[mi]).catch(()=>null),sp=await T("STOCK_"+MOIS[(mi+11)%12]).catch(()=>null);RC.d={a,b,c,pm,sc,sp};RC.t=Date.now();prepRC();try{const q=await solvPc();RC.pcs=q.pc;RC.yr=q.yr}catch(e){RC.pcs=null}
  $("st").dataset.s="Récapitulatif synchronisé à "+new Date().toLocaleTimeString("fr-FR");drawRecap();if(RC.sec=="liv")loadLiv(true)}
-async function rcSet(k,v){RC[k]=v;if(k=="q"||k=="flt"){rcList();return}drawRecap();
+async function rcSet(k,v){if(k=="sec"&&v!=RC.sec)rcFold(v);RC[k]=v;if(k=="q"||k=="flt"){rcList();return}drawRecap();
  if(k=="sec"){if(v=="liv")loadLiv();if(Date.now()-(RC.t||0)>45000){try{token=await tok();await recap();stat()}catch(e){}}}}
 function drawRecap(){if(!RC.d||cur!="recap")return;const S=[["liv","🚚","Livraisons"],["stat","📊","Ventes"],["tre","💶","Trésorerie"],["prod","💊","Produits"]];
  const nav=`<div class="rc-nav">${S.map(([k,i,l])=>`<button class="${RC.sec==k?"on":""}" onclick="rcSet('sec','${k}')"><i>${i}</i><span>${l}</span></button>`).join("")}</div>`,h2=`<h2 style="margin:0 0 2px">RÉCAPITULATIF</h2>`;
- let o={fix:"",body:""};if(RC.sec=="liv")o=rcLiv();else if(RC.sec=="stat")o=rcStat();else if(RC.sec=="tre")o={fix:"",body:rcTre()};else o={fix:rcProdCtl(),body:`<div id="rc-pl"></div>`};
- $("main").style.paddingBottom="";$("main").innerHTML=h2+`<div class="rc-fix">${nav}${o.fix}</div>`+o.body;
+ let o={fix:"",body:""};if(RC.sec=="liv")o=rcLiv();else if(RC.sec=="stat")o=rcStat();else if(RC.sec=="tre")o=rcTre();else o={fix:rcProdCtl(),body:`<div id="rc-pl"></div>`};
+ $("main").style.paddingBottom="";$("main").innerHTML=h2+`<div class="rc-fix">${nav}${o.fix}</div>`+o.body;rcDD();
  const R=document.documentElement.style,hd=document.querySelector("header").offsetHeight,fx=document.querySelector(".rc-fix");R.setProperty("--hh",hd+"px");R.setProperty("--fh",(fx?fx.offsetHeight:0)+"px");R.setProperty("--nh",document.querySelector("nav").offsetHeight+"px");
  if(RC.sec=="prod")rcList();if(RC.sec=="stat")fitStat();if(RC.sec=="tre"){const p=$("pgb-i");if(p)requestAnimationFrame(()=>requestAnimationFrame(()=>p.style.width=p.dataset.w))}initHsb()}
 addEventListener("resize",()=>{if(cur=="recap"){const R=document.documentElement.style,fx=document.querySelector(".rc-fix");R.setProperty("--hh",document.querySelector("header").offsetHeight+"px");R.setProperty("--fh",(fx?fx.offsetHeight:0)+"px");R.setProperty("--nh",document.querySelector("nav").offsetHeight+"px");fitStat()}});
 function fitStat(){const c=$("rc-st");if(!c||cur!="recap"||RC.sec!="stat")return;const nh=document.querySelector("nav").offsetHeight;$("main").style.paddingBottom=(nh+6)+"px";c.style.height=Math.max(120,innerHeight-(c.getBoundingClientRect().top+scrollY)-nh-8)+"px"}
 function accTog(el,k){const s=el.parentNode;s.classList.toggle("open");RC.op[k]=s.classList.contains("open")}
-const unS=u=>{u=String(u||"").trim();return!u?"":/\(s\)$/i.test(u)?u:u+"(s)"};
+const unS=u=>{u=String(u||"").trim();if(/🚫/.test(u))return"";return!u?"":/\(s\)$/i.test(u)?u:u+"(s)"};
 const fold=(k,c,ico,tit,badge,inner)=>`<details class="rc-c" style="--c:${c}" ${RC.op[k]===false?"":"open"} ontoggle="RC.op['${k}']=this.open"><summary><span><i class="ei">${ico}</i> ${tit}</span><span class="sr"><b>${badge}</b><em>▾</em></span></summary><div class="rc-in">${inner}</div></details>`;
 /* --- LIVRAISON : synthèse des tableaux LIVRAISONS_RECOU_<MOIS> --- */
 async function loadLiv(force){if(RC.Lb)return;if(RC.L&&!force&&Date.now()-RC.Lt<45000)return;RC.Lb=true;if(!RC.L)drawRecap();
- try{token=await tok();const R=await pool(MOIS.map(m=>()=>g(`/tables('LIVRAISONS_RECOU_${enc(m)}')/range`)),4),L={};
-  MOIS.forEach((m,i)=>{const d=R[i];if(!d)return;const rows=[];d.values.slice(1).forEach((v,k)=>{if(/^total/i.test(String(v[0]).trim()))return;const t=d.text[k+1];if(v.slice(1).every(x=>x===""||x==null))return;rows.push({n:v[0],fac:t[1],liv:t[2],bl:t[3],deb:nv(v[4])})});L[m]=rows});
-  RC.L=L;RC.Lt=Date.now()}catch(e){RC.Le=e.message}RC.Lb=false;if(cur=="recap"&&RC.sec=="liv")drawRecap()}
+ try{token=await tok();const R=await pool(MOIS.map(m=>()=>g(`/tables('LIVRAISONS_RECOU_${enc(m)}')/range`)),4),L={},LA={};
+  MOIS.forEach((m,i)=>{const d=R[i];if(!d)return;LA[m]={a:parse(d.address)};const rows=[];d.values.slice(1).forEach((v,k)=>{if(/^total/i.test(String(v[0]).trim()))return;const t=d.text[k+1];if(v.slice(1).every(x=>x===""||x==null))return;rows.push({n:v[0],fs:v[1],ls:v[2],fac:dfmt(v[1],t[1]),liv:dfmt(v[2],t[2]),bl:t[3],blv:v[3],deb:nv(v[4]),k:k})});L[m]=rows});
+  RC.L=L;RC.LA=LA;RC.Lt=Date.now()}catch(e){RC.Le=e.message}RC.Lb=false;if(cur=="recap"&&RC.sec=="liv")drawRecap()}
 /* --- LIVRAISONS --- */
 function rcLiv(){if(!RC.L)return{fix:"",body:RC.Le?`<p class="rc-e">⚠ ${esc(RC.Le)}</p>`:`<p class="rc-e" style="padding-top:14px">Chargement des livraisons…</p>`};
  const L=RC.L,all=RC.lm=="TOUS"||!RC.lm,ms=all?MOIS:[RC.lm],tot=m=>L[m]?L[m].reduce((a,r)=>a+r.deb,0):0,nb=m=>L[m]?L[m].length:0,sum=ms.reduce((a,m)=>a+tot(m),0),cnt=ms.reduce((a,m)=>a+nb(m),0),mx=Math.max(1,...ms.map(tot));
- const ctl=`<div class="rc-ctl"><select onchange="RC.lm=this.value;drawRecap()"><option value="TOUS" ${all?"selected":""}>Tous</option>${MOIS.map(m=>`<option value="${m}" ${RC.lm==m?"selected":""}>${m}</option>`).join("")}</select><button class="rc-add" onclick="livForm()"><i class="ei">➕</i> Ajout d'une nouvelle livraison</button></div>`;
+ const ctl=`<div class="rc-ctl"><button type="button" id="dd-lm" class="dd" onclick="ddOpen(this)"></button><button class="rc-add" onclick="livForm()"><i class="ei">➕</i> Ajout d'une nouvelle livraison</button></div>`;
  const k=`<div class="rc-k" style="grid-template-columns:1fr 1fr;margin-bottom:6px"><div style="--c:#5aa9ff"><small>Livraisons enregistrées</small><b>${cnt}</b></div><div style="--c:#ffa94d"><small>Montant total (débit)</small><b style="font-size:15px">${fc(sum)}</b></div></div>`;
- const list=m=>nb(m)?`<ul class="lv">${L[m].map(r=>`<li><div><b>BL ${esc(r.bl)||"—"}</b><small>Facture : ${esc(r.fac)||"—"} · Livraison : ${esc(r.liv)||"—"}</small></div><span class="q">${fc(r.deb)}</span></li>`).join("")}</ul>`:`<p class="rc-e">Aucune livraison enregistrée.</p>`;
- const body=!all?`<section class="rc-s"><h3>LIVRAISONS NPSP – ${RC.lm}</h3><div class="sb">${nb(RC.lm)} livraison(s) · ${fc(tot(RC.lm))}</div>${list(RC.lm)}</section>`:ms.map(m=>fold("l"+m,"#5aa9ff","🚚",m,nb(m),`<div class="lvs"><span>${fc(tot(m))}</span><span class="bar"><s style="width:${Math.max(tot(m)?3:0,100*tot(m)/mx)}%"></s></span></div>${list(m)}`)).join("");
+ const list=m=>nb(m)?`<ul class="lv">${L[m].map(r=>`<li><div><b>${esc(r.bl)||"—"}</b><small>Facture : ${esc(r.fac)||"—"} · Livraison : ${esc(r.liv)||"—"}</small></div><span class="q">${fc(r.deb)}</span></li>`).join("")}</ul>`:`<p class="rc-e">Aucune livraison enregistrée.</p>`;
+ const edb=(m)=>`<button type="button" class="rc-ed" ${nb(m)?"":"disabled"} onclick="livEdit('${m}')" title="Modifier ou supprimer un BL du mois" aria-label="Modifier ou supprimer un BL du mois">✏️</button>`;
+ const foldL=m=>{const n=nb(m),w=Math.max(tot(m)?3:0,100*tot(m)/mx),c=n?"#5aa9ff":"#ff7a9c";
+  return `<details class="rc-c ${n?"":"nol"}" style="--c:${c}" ${RC.op["l"+m]===true?"open":""} ontoggle="RC.op['l${m}']=this.open"><summary><span><span class="mb"><s style="width:${w}%"></s></span><i class="ei">🚚</i> ${m}</span><span class="sr"><b>${n}</b><em>▾</em></span></summary><div class="rc-in"><div class="lvs"><span>${fc(tot(m))}</span><span class="bar"><s style="width:${w}%"></s></span>${edb(m)}</div>${list(m)}</div></details>`};
+ const body=!all?`<section class="rc-s lvm"><h3>LIVRAISONS NPSP – ${RC.lm}</h3><div class="sb"><span>${nb(RC.lm)} livraison(s) · ${fc(tot(RC.lm))}</span>${edb(RC.lm)}</div>${list(RC.lm)}</section>`:ms.map(foldL).join("");
  return{fix:ctl+k,body}}
 const grp=v=>String(Math.round(+v||0)).replace(/\B(?=(\d{3})+(?!\d))/g,"\u00a0");
 function fmtIn(el){const d=el.value.replace(/\D/g,"");el.value=d?grp(d):""}
 function livForm(){const cm=(RC.lm&&RC.lm!="TOUS")?RC.lm:MOIS[new Date().getMonth()],t=new Date().toISOString().slice(0,10),e=document.createElement("div");e.id="lvf";
- e.innerHTML=`<div class="lvbox"><h3>➕ Ajout d'une nouvelle livraison</h3><label>Mois</label><select id="lf-m">${MOIS.map(m=>`<option ${m==cm?"selected":""}>${m}</option>`).join("")}</select><label>Date de la facture</label><input id="lf-f" type="date" value="${t}"><label>Date de livraison</label><input id="lf-l" type="date" value="${t}"><label>N° BL</label><input id="lf-b" type="text" placeholder="BL…"><label>Montant (débit) en F CFA</label><input id="lf-d" type="text" inputmode="numeric" oninput="fmtIn(this)"><p id="lf-e" class="fn"></p><div class="row"><button onclick="$('lvf').remove()">Annuler</button><button class="p" id="lf-ok" onclick="livAdd()">Ajouter</button></div></div>`;document.body.appendChild(e)}
+ e.innerHTML=`<div class="lvbox"><h3>➕ Ajout d'une nouvelle livraison</h3><label>Mois</label><button type="button" id="dd-lf" class="dd" onclick="ddOpen(this)"></button><label>Date de la facture</label><input id="lf-f" type="date" value="${t}"><label>Date de livraison</label><input id="lf-l" type="date" value="${t}"><label>N° BL</label><input id="lf-b" type="text" placeholder="BL…"><label>Montant (débit) en F CFA</label><input id="lf-d" type="text" inputmode="numeric" oninput="fmtIn(this)"><p id="lf-e" class="fn"></p><div class="row"><button onclick="$('lvf').remove()">Annuler</button><button class="p" id="lf-ok" onclick="livAdd()">Ajouter</button></div></div>`;document.body.appendChild(e);ddReg("dd-lf",MOIS.map(m=>[m,m]),cm,()=>{})}
 const serial=s=>{const[y,m,d]=s.split("-").map(Number);return Math.round((Date.UTC(y,m-1,d)-Date.UTC(1899,11,30))/864e5)};
-async function livAdd(){const m=$("lf-m").value,f=$("lf-f").value,l=$("lf-l").value,b=$("lf-b").value.trim(),d=Number($("lf-d").value.replace(/\D/g,"")),er=$("lf-e"),bt=$("lf-ok");
+async function livAdd(){const m=DD["dd-lf"].cur,f=$("lf-f").value,l=$("lf-l").value,b=$("lf-b").value.trim(),d=Number($("lf-d").value.replace(/\D/g,"")),er=$("lf-e"),bt=$("lf-ok");
  if(!f||!l||!b||!d){er.textContent="Renseignez toutes les informations.";return}
  bt.disabled=true;er.textContent="Exportation vers Excel en cours...";er.classList.add("pls");
  try{token=await tok();const d0=await g(`/tables('${enc("LIVRAISONS_RECOU_"+m)}')/range`),V=d0.values,a=parse(d0.address),sh=d0.address.split("!")[0].replace(/'/g,"");let i=-1;
@@ -534,34 +648,38 @@ function rcStat(){const P=RC.P,r=RC.ref,an=RC.per=="an",lib=an?"DE L'ANNÉE 2027
  const top=f=>P.filter(p=>f(p)>0).sort((a,b)=>f(b)-f(a)).slice(0,20);
  const rows=(a,f,fm,tag)=>a.length?`<ol>${a.map((p,i)=>`<li class="${tag&&tag(p,i)?"m80":""}"><i class="rk">${i+1}</i><div class="rb"><span class="nm">${esc(p.n)}</span><span class="bar"><s style="width:${Math.max(3,100*f(p)/f(a[0]))}%"></s></span></div><b class="vl">${fm(p,i)}</b></li>`).join("")}</ol>`:`<p class="rc-e" style="padding:6px 0 0">Aucune donnée pour cette période.</p>`;
  const a1=top(qv),a2=top(ben),tot80=P.reduce((s,p)=>s+Math.max(0,cav(p)),0),srt=P.filter(p=>cav(p)>0).sort((a,b)=>cav(b)-cav(a));let cum=0,n80=0;srt.forEach((p,i)=>{cum+=cav(p);p._c=tot80?cum/tot80:0;if(!n80&&p._c>=.8)n80=i+1});
- const a3=srt.slice(0,20),ctl=`<div class="rc-ctl ${an?"dis":""}"><select onchange="rcSet('ref',+this.value)" ${an?"disabled":""}>${MOIS.map((m,i)=>`<option value="${i}" ${i==r?"selected":""}>${m}</option>`).join("")}</select><div class="rc-seg"><button class="${an?"":"on"}" onclick="rcSet('per','mois')">Mois</button><button class="${an?"on":""}" onclick="rcSet('per','an')">De l'année</button></div></div>`;
+ const a3=srt.slice(0,20),ctl=`<div class="rc-ctl ${an?"dis":""}"><button type="button" id="dd-rf" class="dd" onclick="ddOpen(this)" ${an?"disabled":""}></button><div class="rc-seg"><button class="${an?"":"on"}" onclick="rcSet('per','mois')">Mois</button><button class="${an?"on":""}" onclick="rcSet('per','an')">De l'année</button></div></div>`;
  const acc=(k,c,ico,tit,sub,inner)=>`<section class="acc ${RC.op[k]===true?"open":""}" style="--c:${c}"><div class="acc-h" onclick="accTog(this,'${k}')"><span><i class="ei">${ico}</i> ${tit}</span><em>▾</em></div><div class="acc-b rc-in"><div class="sb">${sub}</div>${inner}</div></section>`;
- const body=`<div id="rc-st">`+acc("s1","#3AFEEB","🏆","TOP 20 DES PRODUITS LES MIEUX VENDUS",lib,rows(a1,qv,p=>`${fn(qv(p))} ${esc(unS(p.u))}`))
+ const body=`<div id="rc-st">`+acc("s1","#3AFEEB","🏆","TOP 20 DES PRODUITS LES MIEUX VENDUS",lib,rows(a1,qv,p=>`${fn(qv(p))}&nbsp;${esc(unS(p.u))}`))
  +acc("s2","#4be38a","💰","TOP 20 DES PRODUITS LES PLUS RENTABLES",lib+" · quantités vendues × marge unitaire",rows(a2,ben,p=>fc(ben(p))))
  +acc("s3","#ffd77a","📈","TOP 20 DES PRODUITS CONTRIBUANT À 80 % DU CHIFFRE D'AFFAIRES CUMULÉ",lib+(n80?` · ${n80} produit(s) (${pc1(n80/Math.max(1,P.length),0)} des références) = 80 % du CA`:""),rows(a3,cav,p=>`${fc(cav(p))}<small>${pc1(cav(p)/tot80)} · cumul ${pc1(p._c,0)}</small>`,(p,i)=>i+1==n80))+`</div>`;
  return{fix:ctl,body}}
 /* --- RÉCAP TRÉSORERIE : graphique CDV (histogrammes) --- */
-function rcTre(){const T=RC.T,M=T.m.slice();if(!M.length)return`<p class="rc-e">Aucune donnée de trésorerie.</p>`;const tt=T.tot||{ca:0,rec:0,ver:0,dep:0,vv:0,tx:0};
- if(T.fin&&(T.fin.ca||T.fin.dep||T.fin.vv))M.push(T.fin);RC.cm=M;
+function rcTre(){const T=RC.T,M=T.m.slice();if(!M.length)return{fix:"",body:`<p class="rc-e">Aucune donnée de trésorerie.</p>`};const tt=T.tot||{ca:0,rec:0,ver:0,dep:0,vv:0,tx:0};
+ if(T.fin)M.push(T.fin);RC.cm=M;
  const pc=Math.max(0,Math.min(1,RC.pcs!=null?RC.pcs:(T.fin&&T.fin.tx?T.fin.tx:tt.tx))),yr=RC.yr||"2027";
- return`<details class="rc-s rc-d" ${RC.op.evo===false?"":"open"} ontoggle="RC.op.evo=this.open"><summary><h3>ÉVOLUTION MENSUELLE SUR L'ANNÉE ${yr}</h3><em class="ind">▾</em></summary><div class="sb">Montants (F CFA) · touchez un mois pour le détail</div><div class="rc-ch">${cdv(M)}</div>
- <div class="lgd"><span><i class="g1"></i>Chiffre d'affaires</span><span><i class="g2"></i>Dépenses</span><span class="vvl" onclick="vvNote()"><i class="g3"></i>Versement NPSP validé*</span></div>
+ const PGB=`<div class="pgb"><div class="tp"><span>Taux de recouvrement NPSP cumulé sur l'ensemble de l'année</span><b>${pc1(pc,0)}</b></div><div class="tr"><i id="pgb-i" data-w="${(pc*100).toFixed(1)}%"></i></div></div>`;return{fix:PGB,body:`<details class="rc-s rc-d" ${RC.op.evo===true?"open":""} ontoggle="RC.op.evo=this.open"><summary><h3>ÉVOLUTION MENSUELLE SUR L'ANNÉE ${yr}</h3><em class="ind">▾</em></summary><div class="sb">Montants (F CFA) · touchez un mois pour le détail</div><div class="rc-ch">${cdv(M)}</div>
+ <div class="lgd"><span><i class="g1"></i>Chiffre d'affaires</span><span><i class="g2"></i>Dépenses</span><span class="vvl" onclick="vvNote()"><i class="g3"></i>Versement NPSP validé*</span><span><i class="g4"></i>Taux de recouvrement NPSP</span></div>
  <div id="vvn" class="vvn hide">*Montant validé après le mois d'exercice et versé à la NPSP le mois en cours ou suivants.</div><div id="rc-tip" class="hide"></div></details>
- <div class="pgb"><div class="tp"><span>Taux de recouvrement NPSP en fin d'année</span><b>${pc1(pc,0)}</b></div><div class="tr"><i id="pgb-i" data-w="${(pc*100).toFixed(1)}%"></i></div></div>
- <details class="rc-s rc-d" ${RC.op.det===false?"":"open"} ontoggle="RC.op.det=this.open"><summary><h3>DÉTAIL PAR MOIS</h3><em class="ind">▾</em></summary><div class="sc" style="margin-top:8px"><table class="rc-t"><tr><th>Mois</th><th>CA</th><th>Recettes</th><th>Total Versé</th><th>Dépenses</th><th>Versement NPSP validé</th><th>Taux</th></tr>${T.m.map((o,i)=>`<tr class="z${i%2}"><td>${o.l}</td><td>${fn(o.ca)}</td><td>${fn(o.rec)}</td><td>${fn(o.ver)}</td><td>${fn(o.dep)}</td><td>${fn(o.vv)}</td><td>${pc1(o.tx,0)}</td></tr>`).join("")}${T.tot?`<tr class="tot"><td>Total</td><td>${fn(tt.ca)}</td><td>${fn(tt.rec)}</td><td>${fn(tt.ver)}</td><td>${fn(tt.dep)}</td><td>${fn(tt.vv)}</td><td>${pc1(tt.tx,0)}</td></tr>`:""}</table></div></details>`}
+ 
+ <details class="rc-s rc-d" ${RC.op.det===true?"open":""} ontoggle="RC.op.det=this.open"><summary><h3>DÉTAIL PAR MOIS</h3><em class="ind">▾</em></summary><div class="sc" style="margin-top:8px"><table class="rc-t"><tr><th>Mois</th><th>CA</th><th>Recettes</th><th>Total Versé</th><th>Dépenses</th><th>Vers.NPSP validé</th><th>Taux</th></tr>${T.m.map((o,i)=>`<tr class="z${i%2}"><td>${o.l}</td><td>${fn(o.ca)}</td><td>${fn(o.rec)}</td><td>${fn(o.ver)}</td><td>${fn(o.dep)}</td><td>${fn(o.vv)}</td><td>${pc1(o.tx,0)}</td></tr>`).join("")}${T.tot?`<tr class="tot"><td>Total</td><td>${fn(tt.ca)}</td><td>${fn(tt.rec)}</td><td>${fn(tt.ver)}</td><td>${fn(tt.dep)}</td><td>${fn(tt.vv)}</td><td>${pc1(tt.tx,0)}</td></tr>`:""}</table></div></details>`}}
 function vvNote(){$("vvn").classList.toggle("hide")}
-function cdv(M){const W=360,H=280,ml=48,mr=10,mt=12,mb=62,w=W-ml-mr,h=H-mt-mb,n=M.length,bw=w/n,mx0=Math.max(1,...M.map(o=>Math.max(o.ca,o.dep,o.vv))),pw=Math.pow(10,Math.floor(Math.log10(mx0))),mx=Math.ceil(mx0/pw*2)/2*pw||1,Y=v=>mt+h-h*v/mx;
+function cdv(M){const W=380,H=290,ml=46,mr=34,mt=12,mb=62,w=W-ml-mr,h=H-mt-mb,n=M.length,bw=w/n,mx0=Math.max(1,...M.map(o=>Math.max(o.ca,o.dep,o.vv))),pw=Math.pow(10,Math.floor(Math.log10(mx0))),mx=Math.ceil(mx0/pw*2)/2*pw||1,Y=v=>mt+h-h*v/mx;
+ const tm=Math.max(0,...M.map(o=>o.tn==null?0:o.tn)),stp=[.05,.1,.2,.25,.5,1].find(q=>q*4>=tm*1.02)||1,px=stp*4,YP=v=>mt+h-h*v/px;
  const gw=bw*.82,b1=gw/3,x0=i=>ml+bw*i+(bw-gw)/2;
- const bars=M.map((o,i)=>[["ca","url(#g1)",""],["dep","url(#g2)",' stroke="#C00000" stroke-width="1"'],["vv","url(#g3)",""]].map(([k,f,s],j)=>`<rect x="${(x0(i)+b1*j+.6).toFixed(1)}" y="${Y(o[k]).toFixed(1)}" width="${(b1-1.2).toFixed(1)}" height="${(h*o[k]/mx).toFixed(1)}" rx="1.2" fill="${f}"${s}/>`).join("")).join("");
- const gy=[0,1,2,3,4].map(t=>{const y=(mt+h-h*t/4).toFixed(1);return`<line x1="${ml}" x2="${W-mr}" y1="${y}" y2="${y}" stroke="#2c6070" stroke-width=".6"/><text x="${ml-3}" y="${(+y+3).toFixed(1)}" text-anchor="end">${kk(mx*t/4)}</text>`}).join("");
- const gx=Array.from({length:n+1},(_,i)=>`<line x1="${(ml+bw*i).toFixed(1)}" x2="${(ml+bw*i).toFixed(1)}" y1="${mt}" y2="${mt+h}" stroke="#2c6070" stroke-width=".6"/>`).join("");
+ const bars=M.map((o,i)=>[["ca","url(#g1)",""],["dep","#C00000",' stroke="#C00000" stroke-width="1"'],["vv","url(#g3)",""]].map(([k,f,st],j)=>`<rect x="${(x0(i)+b1*j+.6).toFixed(1)}" y="${Y(o[k]).toFixed(1)}" width="${(b1-1.2).toFixed(1)}" height="${(h*o[k]/mx).toFixed(1)}" rx="1.2" fill="${f}"${st}/>`).join("")).join("");
+ const gy=[0,1,2,3,4].map(t=>{const y=(mt+h-h*t/4).toFixed(1);return`<line x1="${ml}" x2="${W-mr}" y1="${y}" y2="${y}" stroke="#2a5366" stroke-width=".6"/><text x="${ml-3}" y="${(+y+3).toFixed(1)}" text-anchor="end">${kk(mx*t/4)}</text><text x="${W-mr+3}" y="${(+y+3).toFixed(1)}" text-anchor="start">${Math.round(px*t/4*100)}%</text>`}).join("");
+ const gx=Array.from({length:n+1},(_,i)=>`<line x1="${(ml+bw*i).toFixed(1)}" x2="${(ml+bw*i).toFixed(1)}" y1="${mt}" y2="${mt+h}" stroke="#2a5366" stroke-width=".6"/>`).join("");
  const xl=M.map((o,i)=>{const x=(ml+bw*(i+.5)).toFixed(1),y=mt+h+9;return`<text transform="rotate(-45 ${x} ${y})" x="${x}" y="${y}" text-anchor="end">${/^fin/i.test(o.l)?"FIN":o.l.slice(0,3)}</text>`}).join("");
+ const pts=M.map((o,i)=>o.tn==null?null:[ml+bw*(i+.5),YP(Math.min(o.tn,px))]).filter(Boolean),
+  ln=pts.length>1?`<polyline points="${pts.map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join(" ")}" fill="none" stroke="#FFE066" stroke-width="2.2" stroke-dasharray="6 3" stroke-linecap="round" stroke-linejoin="round"/>`:"",
+  dots=pts.map(p=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3.6" fill="#d57bc8" stroke="#51164a" stroke-width="1.6"/>`).join("");
  const hit=M.map((o,i)=>`<rect id="ch${i}" x="${(ml+bw*i).toFixed(1)}" y="${mt}" width="${bw.toFixed(1)}" height="${h}" fill="rgba(255,255,255,.10)" opacity="0"/><rect x="${(ml+bw*i).toFixed(1)}" y="${mt}" width="${bw.toFixed(1)}" height="${h}" fill="transparent" onclick="cdtTip(${i})"/>`).join("");
- return`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Évolution mensuelle : chiffre d'affaires, dépenses et versement NPSP validé"><defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3aa7e0"/><stop offset=".5" stop-color="#1d7aa8"/><stop offset="1" stop-color="#156082"/></linearGradient><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4cc6f5"/><stop offset="1" stop-color="#0F9ED5"/></linearGradient><linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3fbf55"/><stop offset="1" stop-color="#196B24"/></linearGradient></defs>
- <rect x="${ml}" y="${mt}" width="${w}" height="${h}" fill="rgba(255,169,77,.06)" stroke="#ffa94d" stroke-width="1.8"/>${gx}${gy}${bars}${hit}${xl}
+ return`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Évolution mensuelle : chiffre d'affaires, dépenses, versement NPSP validé et taux de recouvrement"><defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3aa7e0"/><stop offset=".5" stop-color="#1d7aa8"/><stop offset="1" stop-color="#156082"/></linearGradient><linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a9446"/><stop offset=".5" stop-color="#1f6b2a"/><stop offset="1" stop-color="#134a1c"/></linearGradient></defs>
+ <rect x="${ml}" y="${mt}" width="${w}" height="${h}" fill="rgba(255,224,102,.04)" stroke="#FFE066" stroke-width="1.5"/>${gx}${gy}${bars}${ln}${dots}${hit}${xl}
  <text x="${ml+w/2}" y="${H-4}" text-anchor="middle" style="fill:#5AB0FF;font-weight:800;font-size:8.5px">PÉRIODE D'ACTIVITÉ</text><text transform="rotate(-90 9 ${mt+h/2})" x="9" y="${mt+h/2}" text-anchor="middle" style="fill:#5AB0FF;font-weight:800;font-size:8.5px">MONTANTS</text></svg>`}
 function cdtTip(i){const o=RC.cm[i],ch='<svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l5-5 5 5"/></svg>';document.querySelectorAll("[id^=ch]").forEach((e,j)=>e.setAttribute("opacity",j==i?1:0));const t=$("rc-tip");t.classList.remove("hide");
- t.innerHTML=`<button class="cx" onclick="cdtClose()" aria-label="Replier le détail du mois" title="Replier">${ch}</button><b>${o.l}</b><br>CA : <span class="cc">${fc(o.ca)}</span> · Recettes : ${fc(o.rec)}<br>Total Versé : <span class="cv">${fc(o.ver)}</span> · Dépenses : <span class="dn">${fc(o.dep)}</span><br>Versement NPSP validé* : <span class="cv">${fc(o.vv)}</span><br>Taux de recouvrement NPSP : <b>${pc1(o.tx,0)}</b>`}
+ t.innerHTML=`<button class="cx" onclick="cdtClose()" aria-label="Replier le détail du mois" title="Replier">${ch}</button><b>${o.l}</b><br>CA : <span class="cc">${fc(o.ca)}</span> · Recettes : ${fc(o.rec)}<br>Total Versé : <span class="cy">${fc(o.ver)}</span> · Dépenses : <span class="dn">${fc(o.dep)}</span><br>Versement NPSP validé* : <span class="cv">${fc(o.vv)}</span><br>Taux de recouvrement NPSP : <b class="ct">${pc1(o.tx,0)}</b>`}
 function cdtClose(){document.querySelectorAll("[id^=ch]").forEach(e=>e.setAttribute("opacity",0));$("rc-tip").classList.add("hide")}
 
 /* --- PRODUITS (DCI) --- */
@@ -574,7 +692,7 @@ function rcList(){const el=$("rc-pl");if(!el)return;const q=nz(RC.q),K=["all","u
  el.innerHTML=L.length?L.map(p=>{const c=p.rup?"rup":p.cat,va=p.m2.va,cl=va.startsWith("▲")?"up":va.startsWith("▼")?"dn":"";
   return`<details class="pc ${c}"><summary><span class="pn">${esc(p.n)}</span><span class="pill">${CAT[c][0]}</span><span class="ps">Stock : ${dv(p.sd,v=>fn(v))} ${esc(p.u)} pour ${dv(p.ms,v=>fn(v,1))} mois</span></summary>
   <div class="pg"><div><small>Unité de comptage</small><b>${esc(p.u)||"—"}</b></div><div><small>Conso. mensuelle moyenne</small><b>${dv(p.cmm,v=>fn(v,1))}</b></div><div><small>Stock dispo & utilisable</small><b>${dv(p.sd,v=>fn(v))}</b></div><div><small>Mois de stock disponible</small><b>${dv(p.ms,v=>fn(v,1))}</b></div>
-  <div class="w ob"><small>Observations</small><b><i class="ei">${EMO[c]}</i> ${esc(p.obs)||"—"}</b></div><div><small>Prix d'achat unitaire</small><b>${fc(p.m2.pa)}</b></div><div><small>Prix de vente unitaire</small><b>${fc(p.m2.pv)}</b></div><div><small>Marge unitaire</small><b>${fc(p.mg)}</b></div><div><small>Variation des ventes</small><b class="${cl}">${esc(va)||"—"}</b></div>
+  <div class="w ob"><small>Observations</small><b><i class="ei">${EMO[c]}</i> ${esc(p.obs)||"—"}</b></div><div><small>Prix d'achat unitaire</small><b>${p.m2.pa==null?"—":fc(p.m2.pa)}</b></div><div><small>Prix de vente unitaire</small><b>${p.m2.pv==null?"—":fc(p.m2.pv)}</b></div><div><small>Marge unitaire</small><b>${fc(p.mg)}</b></div><div><small>Variation des ventes</small><b class="${cl}">${esc(/🚫/.test(va)?"":va)||"—"}</b></div>
   <div><small>% CA du mois précédent (${esc(RC.pmN||"—")})</small><b>${p.pcaM==null?"—":pc1(p.pcaM,2)}</b></div><div><small>% CA annuel</small><b>${pc1(p.pcaA,2)}</b></div></div></details>`}).join(""):`<p class="rc-e">Aucun produit ne correspond.</p>`}
 
 const FX=(()=>{let xb=null,cv,cx,P=[],W=0,H=0,raf=0,em=false,kind="",last=0,T=0,acc=0,minEnd=0,id=0,mt=0,box=null,art=null,fade=0;
@@ -672,19 +790,20 @@ function zipDocx(files){const te=new TextEncoder(),parts=[],cen=[];let off=0;
  let cs=0;cen.forEach(p=>cs+=p.byteLength);const end=new DataView(new ArrayBuffer(22));end.setUint32(0,0x06054b50,true);end.setUint16(8,files.length,true);end.setUint16(10,files.length,true);end.setUint32(12,cs,true);end.setUint32(16,off,true);
  return new Blob([...parts,...cen,end.buffer],{type:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"})}
 function docxBlob(title,rows){const X=t=>String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"),
- cell=(w,t,o)=>`<w:tc><w:tcPr><w:tcW w:w="${w}" w:type="dxa"/>${o.f?`<w:shd w:val="clear" w:color="auto" w:fill="${o.f}"/>`:""}<w:tcMar><w:top w:w="${o.m}" w:type="dxa"/><w:left w:w="120" w:type="dxa"/><w:bottom w:w="${o.m}" w:type="dxa"/><w:right w:w="120" w:type="dxa"/></w:tcMar><w:vAlign w:val="center"/></w:tcPr><w:p><w:pPr><w:spacing w:after="0" w:line="240" w:lineRule="auto"/>${o.c?'<w:jc w:val="center"/>':""}</w:pPr><w:r><w:rPr>${o.b?"<w:b/><w:bCs/>":""}${o.k?`<w:color w:val="${o.k}"/>`:""}</w:rPr><w:t xml:space="preserve">${X(t)}</w:t></w:r></w:p></w:tc>`,
- W=[4300,2400,2372],tr=(a,o,h,ht)=>`<w:tr><w:trPr><w:trHeight w:val="${ht}"/>${h?"<w:tblHeader/>":""}<w:jc w:val="center"/></w:trPr>${a.map((t,i)=>cell(W[i],t,{...o,c:i==2})).join("")}</w:tr>`,
+ cell=(w,t,o)=>`<w:tc><w:tcPr><w:tcW w:w="${w}" w:type="dxa"/>${o.f?`<w:shd w:val="clear" w:color="auto" w:fill="${o.f}"/>`:""}<w:tcMar><w:top w:w="${o.m}" w:type="dxa"/><w:left w:w="120" w:type="dxa"/><w:bottom w:w="${o.m}" w:type="dxa"/><w:right w:w="120" w:type="dxa"/></w:tcMar><w:vAlign w:val="center"/></w:tcPr><w:p><w:pPr><w:spacing w:after="0" w:line="240" w:lineRule="auto"/>${o.c?'<w:jc w:val="center"/>':""}</w:pPr><w:r><w:rPr>${o.b?"<w:b/><w:bCs/>":""}${o.k?`<w:color w:val="${o.k}"/>`:""}<w:sz w:val="24"/><w:szCs w:val="24"/></w:rPr><w:t xml:space="preserve">${X(t)}</w:t></w:r></w:p></w:tc>`,
+ W=[4300,2400,2372],tr=(a,o,h,ht)=>`<w:tr><w:trPr><w:trHeight w:val="${ht}"/>${h?"<w:tblHeader/>":""}</w:trPr>${a.map((t,i)=>cell(W[i],t,{...o,c:0})).join("")}</w:tr>`,
  bd=["top","left","bottom","right","insideH","insideV"].map(k=>`<w:${k} w:val="single" w:sz="4" w:space="0" w:color="A6A6A6"/>`).join(""),
  body=`<w:p><w:pPr><w:jc w:val="center"/><w:rPr><w:b/><w:bCs/><w:sz w:val="28"/><w:szCs w:val="28"/></w:rPr></w:pPr><w:r><w:rPr><w:b/><w:bCs/><w:sz w:val="28"/><w:szCs w:val="28"/></w:rPr><w:t>${X(title)}</w:t></w:r></w:p>
-<w:tbl><w:tblPr><w:tblW w:w="9072" w:type="dxa"/><w:jc w:val="center"/><w:tblBorders>${bd}</w:tblBorders><w:tblCellMar><w:top w:w="15" w:type="dxa"/><w:left w:w="15" w:type="dxa"/><w:bottom w:w="15" w:type="dxa"/><w:right w:w="15" w:type="dxa"/></w:tblCellMar><w:tblLook w:val="04A0" w:firstRow="1" w:lastRow="0" w:firstColumn="1" w:lastColumn="0" w:noHBand="0" w:noVBand="1"/></w:tblPr><w:tblGrid>${W.map(w=>`<w:gridCol w:w="${w}"/>`).join("")}</w:tblGrid>`
+<w:tbl><w:tblPr><w:tblW w:w="9072" w:type="dxa"/><w:jc w:val="left"/><w:tblInd w:w="0" w:type="dxa"/><w:tblBorders>${bd}</w:tblBorders><w:tblCellMar><w:top w:w="15" w:type="dxa"/><w:left w:w="15" w:type="dxa"/><w:bottom w:w="15" w:type="dxa"/><w:right w:w="15" w:type="dxa"/></w:tblCellMar><w:tblLook w:val="04A0" w:firstRow="1" w:lastRow="0" w:firstColumn="1" w:lastColumn="0" w:noHBand="0" w:noVBand="1"/></w:tblPr><w:tblGrid>${W.map(w=>`<w:gridCol w:w="${w}"/>`).join("")}</w:tblGrid>`
  +tr(["Produits (DCI)","Unité de comptage","Disponibilité"],{f:"1F4E79",k:"FFFFFF",b:1,m:80},1,400)
  +rows.map(r=>r[2]?tr(r.slice(0,2).concat("Disponible"),{b:1,m:50},0,300):tr(r.slice(0,2).concat("Non disponible"),{f:"D9D9D9",k:"7F7F7F",m:50},0,300)).join("")
- +`</w:tbl><w:p><w:pPr><w:pBdr><w:bottom w:val="single" w:sz="12" w:space="1" w:color="A0A0A0"/></w:pBdr></w:pPr></w:p><w:p><w:pPr><w:jc w:val="center"/></w:pPr><w:r><w:t xml:space="preserve">« N’hésitez pas à nous faire part de tout besoin. »</w:t></w:r></w:p><w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="720" w:right="720" w:bottom="720" w:left="720" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr>`,
- NS='xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"',H='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
- return zipDocx([["[Content_Types].xml",H+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>'],
+ +`</w:tbl><w:p/><w:sectPr><w:footerReference w:type="default" r:id="rId2"/><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="720" w:right="720" w:bottom="720" w:left="720" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr>`,
+ NS='xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"',H='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+ return zipDocx([["[Content_Types].xml",H+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/footer1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>'],
   ["_rels/.rels",H+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>'],
-  ["word/_rels/document.xml.rels",H+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>'],
+  ["word/_rels/document.xml.rels",H+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer" Target="footer1.xml"/></Relationships>'],
   ["word/styles.xml",H+`<w:styles ${NS}><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Aptos" w:hAnsi="Aptos" w:eastAsia="Aptos" w:cs="Aptos"/><w:sz w:val="24"/><w:szCs w:val="24"/><w:lang w:val="fr-FR"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="160" w:line="278" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/><w:qFormat/></w:style></w:styles>`],
+  ["word/footer1.xml",H+`<w:ftr ${NS}><w:p><w:pPr><w:jc w:val="center"/></w:pPr><w:r><w:rPr><w:sz w:val="24"/><w:szCs w:val="24"/></w:rPr><w:t xml:space="preserve">« N’hésitez pas à nous faire part de tout besoin. »</w:t></w:r></w:p></w:ftr>`],
   ["word/document.xml",H+`<w:document ${NS}><w:body>${body}</w:body></w:document>`]])}
 function dispoWord(){if(!RC.P||!RC.P.length){alert("Les données du récapitulatif ne sont pas encore chargées.");return}
  const L=RC.P.filter(p=>p.n&&!/DR$/i.test(p.n.trim())).sort((a,b)=>a.n.localeCompare(b.n,"fr",{sensitivity:"base"})),d=new Date(),mo=cap(MOIS[d.getMonth()]),
@@ -693,6 +812,44 @@ function dispoWord(){if(!RC.P||!RC.P.length){alert("Les données du récapitulat
  const dl=()=>{const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000)};
  if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f],title:name}).catch(e=>{if(e&&e.name!="AbortError")dl()});else dl();
  $("st").dataset.s=` · 📄 ${name} généré (${L.length} produits)`;stat()}
+
+/* ====== Liste déroulante soignée (remplace la liste plein écran du mobile) ====== */
+const DD={},dE=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function ddLbl(b){const d=DD[b.id],o=d.opts.find(x=>String(x[0])==String(d.cur));b.innerHTML=`<span>${dE(o?o[1]:"")}</span><em>▾</em>`}
+function ddReg(id,opts,cur,cb){DD[id]={opts,cur,cb};const b=$(id);if(b)ddLbl(b)}
+function ddClose(){const p=$("ddp");if(p)p.remove();document.querySelectorAll(".dd.open").forEach(b=>b.classList.remove("open"))}
+function ddOpen(b){const was=b.classList.contains("open");ddClose();if(was)return;const d=DD[b.id];if(!d)return;b.classList.add("open");
+ const p=document.createElement("div");p.id="ddp";p.innerHTML=`<div class="g ${d.opts.length<=6&&d.opts.some(o=>String(o[1]).length>14)?"l1":""}">${d.opts.map(([v,l])=>`<button type="button" class="${String(v)==String(d.cur)?"on":""} ${v==="TOUS"?"w":""}" data-v="${dE(v)}">${dE(l)}</button>`).join("")}</div>`;
+ document.body.appendChild(p);const r=b.getBoundingClientRect(),w=Math.min(innerWidth-16,Math.max(r.width,290));p.style.width=w+"px";p.style.left=Math.max(8,Math.min(r.left,innerWidth-w-8))+"px";
+ const top=r.bottom+6;p.style.top=top+"px";p.style.maxHeight=Math.max(160,Math.min(innerHeight-top-10,360))+"px";
+ p.onclick=e=>{const t=e.target.closest("button[data-v]");if(!t)return;d.cur=t.dataset.v;ddLbl(b);ddClose();d.cb(d.cur)}}
+document.addEventListener("pointerdown",e=>{if(!e.target.closest("#ddp,.dd"))ddClose()},true);
+addEventListener("resize",ddClose);document.addEventListener("scroll",e=>{if(e.target&&e.target.id==="ddp")return;ddClose()},true);
+ddReg("moisb",MOIS.map(m=>[m,m]),$("mois").value,v=>{$("mois").value=v;load()});
+function rcDD(){if($("dd-lm"))ddReg("dd-lm",[["TOUS","Tous"],...MOIS.map(m=>[m,m])],RC.lm&&RC.lm!="TOUS"?RC.lm:"TOUS",v=>{RC.lm=v;drawRecap()});
+ if($("dd-rf"))ddReg("dd-rf",MOIS.map((m,i)=>[String(i),m]),String(RC.ref),v=>rcSet("ref",+v))}
+function rcFold(sec){const pre={liv:/^l/,stat:/^s\d$/,tre:/^(evo|det)$/}[sec];if(pre)Object.keys(RC.op).forEach(x=>{if(pre.test(x))delete RC.op[x]})}
+const dfmt=(v,t)=>{if(typeof v==="number"&&v>0){const d=new Date(Date.UTC(1899,11,30)+Math.round(v)*864e5),p=x=>String(x).padStart(2,"0");return p(d.getUTCDate())+"/"+p(d.getUTCMonth()+1)+"/"+d.getUTCFullYear()}return String(t==null?"":t)};
+const isoD=v=>typeof v==="number"&&v>0?new Date(Date.UTC(1899,11,30)+Math.round(v)*864e5).toISOString().slice(0,10):"";
+/* ====== Modifier / supprimer un BL du mois ====== */
+let LE=null;
+function livClose(){const e=$("lvf");if(e)e.remove();ddClose();LE=null}
+function livEdit(m){const L=(RC.L&&RC.L[m])||[];if(!L.length)return;livClose();const e=document.createElement("div");e.id="lvf";document.body.appendChild(e);LE={m,i:0,step:"pick"};livDraw()}
+function livInfo(){const r=RC.L[LE.m][LE.i],e=$("lb-i");if(e&&r)e.textContent=`Facture : ${r.fac||"—"} · Livraison : ${r.liv||"—"} · ${fc(r.deb)}`}
+function livDraw(){const e=$("lvf");if(!e||!LE)return;const m=LE.m,L=RC.L[m]||[],r=L[LE.i];if(!r){livClose();return}
+ const h=`<h3>✏️ BL du mois – ${m}</h3>`;
+ if(LE.step==="pick"){e.innerHTML=`<div class="lvbox">${h}<label>BL concerné</label><button type="button" id="dd-lb" class="dd" onclick="ddOpen(this)"></button><div class="fn" id="lb-i"></div><p class="fn" style="font-size:13px;color:var(--tx)">Voulez-vous modifier ou supprimer ce BL ?</p><div class="row"><button class="p" onclick="LE.step='edit';livDraw()">Modifier</button><button class="dl" onclick="LE.step='del';livDraw()">Supprimer</button></div><div class="row"><button onclick="livClose()">Annuler</button></div></div>`;
+  ddReg("dd-lb",L.map((x,j)=>[String(j),(x.bl||"—")+" · "+fc(x.deb)]),String(LE.i),v=>{LE.i=+v;livInfo()});livInfo()}
+ else if(LE.step==="edit"){e.innerHTML=`<div class="lvbox">${h}<label>Date de la facture</label><input id="lm-f" type="date" value="${isoD(r.fs)}"><label>Date de livraison</label><input id="lm-l" type="date" value="${isoD(r.ls)}"><label>N° BL</label><input id="lm-b" type="text" value="${esc(r.bl)}"><label>Montant (débit) en F CFA</label><input id="lm-d" type="text" inputmode="numeric" value="${grp(r.deb)}" oninput="fmtIn(this)"><p id="lf-e" class="fn"></p><div class="row"><button onclick="LE.step='pick';livDraw()">Retour</button><button class="p" id="lf-ok" onclick="livApply('edit')">Enregistrer</button></div></div>`}
+ else{e.innerHTML=`<div class="lvbox">${h}<p class="fn" style="font-size:13px;color:var(--tx)">Supprimer le BL <b>${esc(r.bl)||"—"}</b> (${fc(r.deb)}) du mois de ${m} ?</p><p id="lf-e" class="fn"></p><div class="row"><button onclick="LE.step='pick';livDraw()">Retour</button><button class="dl" id="lf-ok" onclick="livApply('del')">Confirmer la suppression</button></div></div>`}}
+async function livApply(kind){const m=LE.m,r=RC.L[m][LE.i],er=$("lf-e"),bt=$("lf-ok");let vals;
+ if(kind==="edit"){const f=$("lm-f").value,l=$("lm-l").value,b=$("lm-b").value.trim(),d=Number($("lm-d").value.replace(/\D/g,""));if(!f||!l||!b||!d){er.textContent="Renseignez toutes les informations.";return}vals=[[serial(f),serial(l),b,d]]}else vals=[["","","",""]];
+ bt.disabled=true;er.textContent="Exportation vers Excel en cours...";er.classList.add("pls");
+ try{token=await tok();const d0=await g(`/tables('${enc("LIVRAISONS_RECOU_"+m)}')/range`),V=d0.values,a=parse(d0.address),sh=d0.address.split("!")[0].replace(/'/g,""),i=r.k+1,row=V[i];
+  if(!row||String(row[3]).trim()!==String(r.blv).trim()||nv(row[4])!==r.deb)throw new Error("Ce BL a changé dans Excel : actualisez puis recommencez.");
+  const xr=a.row+i;await g(`/worksheets('${enc(sh)}')/range(address='${col(a.col+1)}${xr}:${col(a.col+4)}${xr}')`,{method:"PATCH",body:J({values:vals})});
+  livClose();RC.Lt=0;await loadLiv(true);$("st").dataset.s=kind==="edit"?" · ✔ BL modifié":" · ✔ BL supprimé";stat()}
+ catch(e){er.classList.remove("pls");er.textContent="⚠ "+e.message;bt.disabled=false}}
 /* ====== Vérification des chemins Excel (tables attendues par l'appli) ====== */
 async function checkPaths(){try{const T=(await g("/tables?$select=name")).value.map(t=>t.name),need=["RECAP","RECAP2","RECAP_TRÉSORERIE","NOTES_EXCEL",...MOIS.flatMap(m=>["STOCK_"+m,"LIVRAISONS_RECOU_"+m])],miss=need.filter(n=>!T.includes(n));
  if(miss.length){$("st").dataset.s=" · ⚠ Tables absentes d'Excel : "+miss.slice(0,4).join(", ")+(miss.length>4?"…":"");stat()}}catch(e){}}
